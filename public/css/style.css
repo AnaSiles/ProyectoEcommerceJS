@@ -1,0 +1,10 @@
+body{
+    font-family: 'Inter', sans-serif;
+    color: var(--negro);
+    background-color:rgb(237, 195, 211);
+    margin: 0;
+}
+
+header{
+    background-color: rgb(237, 195, 211);
+}
