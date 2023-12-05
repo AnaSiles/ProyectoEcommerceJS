@@ -24,11 +24,11 @@ connection.connect(function (error) {
   }
   console.log("Conectado a MySQL");
 });
-// Enpoint de compras
+// Enpoint de carritos
 
-app.get("/compras/:id", function (request, response) {
+app.get("/carrito/:id", function (request, response) {
   connection.query(
-    `SELECT compras.id, productos.nombre, productos.precio, productos.foto, compraproducto.cantidad FROM compras JOIN compraproducto ON compras.id=compraproducto.compraid JOIN productos ON productos.id=compraproducto.productoid WHERE compras.id=${request.params.id}`,
+    `SELECT compras.id, productos.nombre, productos.precio, productos.foto, compraproducto.cantidad, productos.id AS productoid FROM compras JOIN compraproducto ON compras.id=compraproducto.compraid JOIN productos ON productos.id=compraproducto.productoid WHERE compras.id=${request.params.id}`,
     (error, result, fields) => {
       if (error) {
         response.status(400).send(`${error.message}`);
@@ -41,10 +41,97 @@ app.get("/compras/:id", function (request, response) {
 });
 // SELECT compras.id, productos.nombre, productos.precio, productos.foto, compraproducto.cantidad FROM compras JOIN compraproducto ON compras.id=compraproducto.compraid JOIN productos ON productos.id=compraproducto.productoid WHERE compras.id=1;
 
-// Enpoint formas_pago
+// Endpoints para aumentar y disminuir cantidad
+
+app.post(
+  "/incremento_cantidad/:compraid/:productoid",
+  function (request, response) {
+    console.log("ID del producto recibido: ", request.params.productoid);
+    console.log("ID de la compra recibida: ", request.params.compraid);
+    connection.query(
+      `SELECT cantidad FROM compraproducto WHERE compraid=${request.params.compraid} AND productoid=${request.params.productoid}`,
+      (error, result, fields) => {
+        if (error) {
+          response.status(400).send(`${error.message}`);
+          return;
+        }
+
+        let cantidad = result[0].cantidad;
+        ++cantidad;
+
+        console.log(cantidad);
+        connection.query(
+          `UPDATE compraproducto SET cantidad=${cantidad} WHERE compraid=${request.params.compraid} AND productoid=${request.params.productoid}`,
+          (error, result, fields) => {
+            if (error) {
+              response.status(400).send(`${error.message}`);
+              return;
+            }
+            response.send({ cantidad: cantidad });
+            console.log("Cantidad incrementada correctamente");
+          }
+        );
+      }
+    );
+  }
+);
+
+app.post(
+  "/disminuir_cantidad/:compraid/:productoid",
+  function (request, response) {
+    console.log("ID del producto recibido: ", request.params.productoid);
+    console.log("ID de la compra recibida: ", request.params.compraid);
+    connection.query(
+      `SELECT cantidad FROM compraproducto WHERE compraid=${request.params.compraid} AND productoid=${request.params.productoid}`,
+      (error, result, fields) => {
+        if (error) {
+          response.status(400).send(`${error.message}`);
+          return;
+        }
+
+        let cantidad = result[0].cantidad;
+        --cantidad;
+
+        console.log(cantidad);
+        connection.query(
+          `UPDATE compraproducto SET cantidad=${cantidad} WHERE compraid=${request.params.compraid} AND productoid=${request.params.productoid}`,
+          (error, result, fields) => {
+            if (error) {
+              response.status(400).send(`${error.message}`);
+              return;
+            }
+            response.send({ cantidad: cantidad });
+            console.log("Cantidad disminuida correctamente");
+          }
+        );
+      }
+    );
+  }
+);
+
+// Endpoint de eliminar producto
+
+app.delete(
+  "/eliminarProducto/:productoid/:compraid",
+  function (request, response) {
+    connection.query(
+      `DELETE FROM compraproducto WHERE productoid=${request.params.productoid} AND compraid=${request.params.compraid}`,
+      (error, result, fields) => {
+        if (error) {
+          response.status(400).send(`${error.message}`);
+          return;
+        }
+        response.send(result);
+        console.log("Artículo eliminado");
+      }
+    );
+  }
+);
+
+// Endpoint formas_pago
 app.get("/finalizarCompra/:id", function (request, response) {
   connection.query(
-    `SELECT formas_pago.id,formas_pago.tipo_tarjeta, formas_pago.numero_tarjeta, formas_pago.usuarioid FROM formas_pago where formas_pago.usuarioid=${request.params.id};`,
+    `SELECT formas_pago.id,formas_pago.tipo_tarjeta, formas_pago.numero_tarjeta, formas_pago.usuarioid FROM formas_pago where formas_pago.usuarioid=${request.params.id}`,
 
     (error, result, fields) => {
       if (error) {
@@ -75,7 +162,7 @@ app.post("/pagar/:compraid", function (request, response) {
   console.log("ID de la compra recibido:", request.params.compraid);
   console.log("Precio final:", request.body.precio_final);
   connection.query(
-    `UPDATE compras set tarjetaid=${request.body.tarjetaid}, precio_final=${request.body.precio_final} where id=${request.params.compraid}`,
+    `UPDATE compras SET tarjetaid=${request.body.tarjetaid}, precio_final=${request.body.precio_final} where id=${request.params.compraid}`,
     (error, result, fields) => {
       if (error) {
         response.status(400).send(`error:${error.message}`);
@@ -139,6 +226,22 @@ app.post("/direccion/:usuarioid", function (request, response) {
         return;
       }
       response.send({ message: "direccion añadida" });
+    }
+  );
+});
+
+// Endpoint de productos
+
+app.get("/productos", function (request, response) {
+  connection.query(
+    `SELECT nombre, descripcion_corta, precio, valoraciones, foto FROM productos`,
+    (error, result, fields) => {
+      if (error) {
+        response.status(400).send(`${error.message}`);
+        return;
+      }
+      response.send(result);
+      console.log("Obtiene los datos de todos los productos");
     }
   );
 });

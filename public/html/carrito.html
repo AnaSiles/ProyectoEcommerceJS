@@ -24,11 +24,12 @@
       rel="stylesheet"
     />
     <!--mi estilo-->
-    <link rel="stylesheet" href="/CSS/style.css" />
-    <link rel="stylesheet" href="/CSS/cards.css" />
-    <link rel="stylesheet" href="/CSS/button.css" />
-    <link rel="stylesheet" href="/CSS/caja.css" />
-    <link rel="stylesheet" href="/CSS/menu.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/cards.css" />
+    <link rel="stylesheet" href="/css/button.css" />
+    <link rel="stylesheet" href="/css/carrito.css" />
+    <link rel="stylesheet" href="/css/menu.css" />
     <style>
       .carousel-caption {
         top: 1.25rem;
@@ -48,126 +49,110 @@
     </style>
   </head>
   <body>
-    <header class="navbar navbar-expand-lg bg-body-success py-4">
+    <header class="navbar navbar-expand-lg py-4">
       <div class="container position-relative text-nowrap gap-3">
-        <a class="navbar-brand"
-          >Mi <span class="text-success">Cumpleaños Feliz</span></a
-        >
-        <form class="d-flex flex-grow-1 gap-3" role="search">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Buscar"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-success" type="submit">Buscar</button>
-
-          <button type="button" class="btn btn-success position-relative">
-            <i class="bi bi-cart4"></i>Carrito
-
-            <span
-              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-            >
-              99+<span class="visually-hidden text">Carrito</span>
-            </span>
-          </button>
-        </form>
+        <div>
+          <img src="../images/Logo.jpeg" alt="Logo" width="60" height="60" />
+          <a class="navbar-brand"
+            >Mi <span class="text-success">Cumpleaños Feliz</span></a
+          >
+        </div>
+        <div>
+          <form class="d-flex flex-grow-1 gap-3" role="search">
+            <a class="btn bi bi-cart4"> Carrito</a>
+            <a class="btn bi bi-wallet2"> Forma de pago</a>
+            <a class="btn bi bi-credit-card"> Finalizar pedido</a>
+          </form>
+        </div>
       </div>
     </header>
 
     <main>
-      <h1>Mi carrito</h1>
-      <a href="index.html" class=".btn">Seguir comprando</a>
-      <hr />
-      <section id="compras"></section>
+      <div class="compra">
+        <div class="titulo">
+          <h2>Mi carrito</h2>
+          <a href="../index.html" class="btn">Seguir comprando</a>
+        </div>
+        <div class="carrito">
+          <section id="carrito"></section>
 
-      <section id="total"></section>
-
-      <section>
+          <section id="total"></section>
+        </div>
         <h2>PRODUCTOS RECOMENDADOS</h2>
-        <h2>PRODUCTOS RECOMENDADOS</h2>
-        <div class="card">
-          <img
-            src="../images/Tarta de Yema Tostada.jpeg"
-            alt="tarta-yema"
-            width="20%"
-          />
+        <section>
           <div class="card">
-            <h4>Tarta de Yema Tostada</h4>
-            <p class="m-color">
-              50.00<i class="bi bi-currency-euro" m-color></i>
-            </p>
-          </div>
-          <p>Rica tarta de Yema Tostada y rellena de crema</p>
-          <div>
-            <button class="btn-block">Añadir al carrito</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <img
-            src="../images/Tarta de chocolate.jpeg"
-            alt="tarta-chocolate"
-            width="20%"
-          />
-          <div>
-            <h4>Tarta de Chocolate</h4>
-            <p class="m-color">30.00<i class="bi bi-currency-euro"></i></p>
-          </div>
-          <div class="valoracion"><span class="m-color">★★★★</span>★</div>
-          <p>Rica tarta de Chocolate rellena de nata</p>
-          <div>
-            <button class="btn-block">Añadir al carrito</button>
-          </div>
-        </div>
-        <div>
-          <img
-            src="../images/Tarta de queso.jpeg"
-            alt="Tarta de queso"
-            width="20%"
-          />
-          <div>
-            <h4>Tarta de Queso</h4>
-            <p class="m-color">35.00<i class="bi bi-currency-euro"></i></p>
-          </div>
-          <p>
-            Cremosa tarta de queso con mermelada de mora y crjiente galleta de
-            base
-          </p>
-          <div>
-            <button class="btn btn-block">Añadir al carrito</button>
-          </div>
-          <div>
             <img
-              src="../images/Tarta de Lacasitos.jpeg"
+              src="/images/Tarta_de_Yema_Tostada.jpeg"
+              alt="tarta-yema"
+              width="20%"
+            />
+            <div class="card">
+              <h4>Tarta de Yema Tostada</h4>
+              <p class="m-color">
+                50.00<i class="bi bi-currency-euro" m-color></i>
+              </p>
+            </div>
+            <p>Rica tarta de Yema Tostada y rellena de crema</p>
+            <div>
+              <button class="btn-block">Añadir al carrito</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <img
+              src="/images/Tarta_de_chocolate.jpeg"
+              alt="tarta-chocolate"
+              width="20%"
+            />
+            <div>
+              <h4>Tarta de Chocolate</h4>
+              <p class="m-color">30.00<i class="bi bi-currency-euro"></i></p>
+            </div>
+            <div class="valoracion"><span class="m-color">★★★★</span>★</div>
+            <p>Rica tarta de Chocolate rellena de nata</p>
+            <div>
+              <button class="btn-block">Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="card">
+            <img
+              src="/images/Tarta_de_queso.jpeg"
+              alt="Tarta de queso"
+              width="20%"
+            />
+            <div>
+              <h4>Tarta de Queso</h4>
+              <p class="m-color">35.00<i class="bi bi-currency-euro"></i></p>
+            </div>
+            <div class="valoracion"><span class="m-color">★★★★</span>★</div>
+            <p>
+              Cremosa tarta de queso con mermelada de mora y crjiente galleta de
+              base
+            </p>
+            <div>
+              <button class="btn btn-block">Añadir al carrito</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <img
+              src="/images/Tarta_de_Lacasitos.jpeg"
               alt="Tarta de lacasitos"
               width="20%"
             />
-          </div>
-          <div>
-            <h4>Tarta de Lacasitos</h4>
-            <p class="m-color">25<i class="bi bi-currency-euro"></i></p>
-          </div>
-          <p>Divertida y colorida tarta de Lacasitos</p>
-          <div>
-            <button class="btn btn-block">Añadir al carrito</button>
-          </div>
-          <img
-            src="../images/Tarta de Lacasitos.jpeg"
-            alt="Tarta de lacasitos"
-            width="20%"
-          />
 
-          <div>
-            <h4>Tarta de Lacasitos</h4>
-            <p class="m-color">25<i class="bi bi-currency-euro"></i></p>
+            <div>
+              <h4>Tarta de Lacasitos</h4>
+              <p class="m-color">25<i class="bi bi-currency-euro"></i></p>
+            </div>
+            <div class="valoracion"><span class="m-color">★★★★</span>★</div>
+            <p>Divertida y colorida tarta de Lacasitos</p>
+            <div>
+              <button class="btn btn-block">Añadir al carrito</button>
+            </div>
           </div>
-          <p>Divertida y colorida tarta de Lacasitos</p>
-          <div>
-            <button class="btn btn-block">Añadir al carrito</button>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
 
     <section id="garantias" class="py-5">
@@ -260,6 +245,6 @@
         </div>
       </div>
     </footer>
-    <script src="/js/compras.js"></script>
+    <script src="/js/carrito.js"></script>
   </body>
 </html>

@@ -1,10 +1,88 @@
-body{
-    font-family: 'Inter', sans-serif;
-    color: var(--negro);
-    background-color:rgb(237, 195, 211);
-    margin: 0;
+:root {
+    --verde-claro: #CCFFCC;
+    --verde-oscuro: #90EE90;
+    --mostaza-claro: #FFEC8B;
+    --mostaza-oscuro: #F0E68C;
+    --rosa-pastel-claro: #FFB6C1;
+    --rosa-pastel-oscuro: #FFAEB9;
+    --celeste-claro: #B2FFFF;
+    --celeste-oscuro: #87CEFA;
+  }
+  
+
+body {
+    font-family:cursive;
+    
+  }
+
+footer {
+    background-color:#98FB98; /* Verde para el pie de página */
+  }
+  h2 {font-size: 32px;
+    font-family: cursive;
 }
 
-header{
-    background-color: rgb(237, 195, 211);
-}
+  
+  .btn {
+    background-color: #B6DCB6; /* Color de fondo */
+    text-decoration:none; /*Eliminar la decoración del texto*/
+    border: none;
+    color: white; /* Color del texto */
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 6px 4px;
+    cursor: pointer;
+  }
+  .btn-mas{
+    background-color: white;
+    border:none;
+    color:#B6DCB6;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin:4px 2px;
+    cursor: pointer;
+  }
+
+  .botones {
+    display:flex; /*Coloca los botones uno al lado del otro*/
+    gap: 10px; /*Espacio entre los botones*/
+  }
+  .producto img {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .detalles {
+    flex-grow: 1;
+    margin-left: 20px;
+  }
+  .precio-cantidad{
+    display:flex;
+    gap:10px;
+  }
+  
+ 
+  
+  
+  .precio-final {
+    color: #dc3545; /* Color del texto */
+    font-size: 24px;
+    margin: 20px 0;
+  }
+  
+  .m-color {
+    color: #dc3545; /* Color del icono */
+  }
+  .wrap{
+    max-width: 1200px;
+    padding: 0 16px;
+      margin: 0% auto;
+  
+  }
+    
+  

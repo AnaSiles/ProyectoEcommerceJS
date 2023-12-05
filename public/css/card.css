@@ -1,0 +1,57 @@
+.contenedor{
+    display: flex;
+    justify-content: space-around;
+}
+
+.contenedor div{
+        padding: 30px;
+
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid hsla(var(--hue), 82%, 63%, 1);
+    border-radius: 16px;
+    max-width: 250px;
+    background: white;
+    overflow: hidden;
+    
+}
+
+.card img{
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 16px 16px 0px 0px;  
+
+}
+.card-contenido{
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.card .card-contenido .card-titulo{
+    display:flex;
+    
+    justify-content: space-between;
+    /* white-space: nowrap; */
+}
+.card h5, .card p{
+    margin:0px;
+    font-family: cursive;
+    font-size: 16px;
+}
+.card .valoracion{
+    color: #cacaca;
+}
+.card .valoracion .bi{
+    margin-right: 4px;
+    }
+.card .card-contenido .acciones{
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
