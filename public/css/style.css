@@ -12,16 +12,21 @@
 
 body {
     font-family:cursive;
+    background-image: url('/images/backgroundRober.jpg') ;
     
   }
 
 footer {
-    background-color:#98FB98; /* Verde para el pie de página */
+    background-color:#FFEC8B; /* Verde para el pie de página */
   }
   h2 {font-size: 32px;
     font-family: cursive;
 }
 
+
+.tituloWeb{
+  color:rgb(55, 241, 111);
+}
   
   .btn {
     background-color: #B6DCB6; /* Color de fondo */
@@ -66,7 +71,14 @@ footer {
     gap:10px;
   }
   
- 
+  .enlaceVolver {
+    color: white; /* Cambia el color del texto a un tono de gris o cualquier color deseado */
+    text-decoration: none; /* Elimina el subrayado predeterminado de los enlaces */
+}
+
+.enlaceVolver:hover {
+    text-decoration: underline; /* Añade subrayado al pasar el mouse sobre el enlace */
+}
   
   
   .precio-final {
@@ -79,10 +91,11 @@ footer {
     color: #dc3545; /* Color del icono */
   }
   .wrap{
-    max-width: 1200px;
-    padding: 0 16px;
-      margin: 0% auto;
+    max-width: 1400px;
+    
+    margin: 0% auto;
   
   }
+  
     
   

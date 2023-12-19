@@ -26,10 +26,9 @@
     <!--mi estilo-->
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/header.css" />
-    <link rel="stylesheet" href="/css/cards.css" />
-    <link rel="stylesheet" href="/css/button.css" />
+    <link rel="stylesheet" href="/css/card.css" />
+    <link rel="stylesheet" href="/css/finalizarCompra.css" />
     <link rel="stylesheet" href="/css/carrito.css" />
-    <link rel="stylesheet" href="/css/menu.css" />
     <style>
       .carousel-caption {
         top: 1.25rem;
@@ -52,7 +51,7 @@
     <header class="navbar navbar-expand-lg py-4">
       <div class="container position-relative text-nowrap gap-3">
         <div>
-          <img src="../images/Logo.jpeg" alt="Logo" width="60" height="60" />
+          <img src="../images/logo2.jpeg" alt="Logo" width="60" height="60" />
           <a class="navbar-brand"
             >Mi <span class="text-success">Cumpleaños Feliz</span></a
           >
@@ -67,7 +66,7 @@
       </div>
     </header>
 
-    <main>
+    <main class="wrap">
       <div class="compra">
         <div class="titulo">
           <h2>Mi carrito</h2>
@@ -78,84 +77,16 @@
 
           <section id="total"></section>
         </div>
-        <h2>PRODUCTOS RECOMENDADOS</h2>
-        <section>
-          <div class="card">
-            <img
-              src="/images/Tarta_de_Yema_Tostada.jpeg"
-              alt="tarta-yema"
-              width="20%"
-            />
-            <div class="card">
-              <h4>Tarta de Yema Tostada</h4>
-              <p class="m-color">
-                50.00<i class="bi bi-currency-euro" m-color></i>
-              </p>
-            </div>
-            <p>Rica tarta de Yema Tostada y rellena de crema</p>
-            <div>
-              <button class="btn-block">Añadir al carrito</button>
-            </div>
+        <section class="wrap">
+          <div class="container d-flex justify-content-between">
+            <h2>PRODUCTOS RECOMENDADOS</h2>
           </div>
-
-          <div class="card">
-            <img
-              src="/images/Tarta_de_chocolate.jpeg"
-              alt="tarta-chocolate"
-              width="20%"
-            />
-            <div>
-              <h4>Tarta de Chocolate</h4>
-              <p class="m-color">30.00<i class="bi bi-currency-euro"></i></p>
-            </div>
-            <div class="valoracion"><span class="m-color">★★★★</span>★</div>
-            <p>Rica tarta de Chocolate rellena de nata</p>
-            <div>
-              <button class="btn-block">Añadir al carrito</button>
-            </div>
-          </div>
-          <div class="card">
-            <img
-              src="/images/Tarta_de_queso.jpeg"
-              alt="Tarta de queso"
-              width="20%"
-            />
-            <div>
-              <h4>Tarta de Queso</h4>
-              <p class="m-color">35.00<i class="bi bi-currency-euro"></i></p>
-            </div>
-            <div class="valoracion"><span class="m-color">★★★★</span>★</div>
-            <p>
-              Cremosa tarta de queso con mermelada de mora y crjiente galleta de
-              base
-            </p>
-            <div>
-              <button class="btn btn-block">Añadir al carrito</button>
-            </div>
-          </div>
-
-          <div class="card">
-            <img
-              src="/images/Tarta_de_Lacasitos.jpeg"
-              alt="Tarta de lacasitos"
-              width="20%"
-            />
-
-            <div>
-              <h4>Tarta de Lacasitos</h4>
-              <p class="m-color">25<i class="bi bi-currency-euro"></i></p>
-            </div>
-            <div class="valoracion"><span class="m-color">★★★★</span>★</div>
-            <p>Divertida y colorida tarta de Lacasitos</p>
-            <div>
-              <button class="btn btn-block">Añadir al carrito</button>
-            </div>
-          </div>
+          <div id="productos" class="contenedor"></div>
         </section>
       </div>
     </main>
 
-    <section id="garantias" class="py-5">
+    <section id="garantias" class="py-5 wrap">
       <div class="container d-flex justify-content-between">
         <div class="d-flex align-items-center gap-3">
           <i class="bi bi-credit-card h2 text-success"></i>
@@ -246,5 +177,6 @@
       </div>
     </footer>
     <script src="/js/carrito.js"></script>
+    <script src="/js/productos.js"></script>
   </body>
 </html>

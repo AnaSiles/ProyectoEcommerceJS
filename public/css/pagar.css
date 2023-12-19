@@ -1,0 +1,33 @@
+.seleccion{
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+    padding:10px;
+    
+    
+}
+.tarjetas{
+    display: flex;
+    justify-content: space-around;
+    overflow: hidden;
+    padding-top: 16px;
+}
+
+
+.numeroTarjetas{
+    display: flex;
+    text-decoration: none;
+    /* border:2px solid black; */
+    color:white;
+    background-color: #B6DCB6;
+    padding:10px;
+    margin:20px;
+    border-radius: 8px;
+}
+.numeroTarjetas a{
+    text-decoration: none;
+}
+.envios{
+    display: inline;
+    padding-left: 24px;
+}

@@ -1,0 +1,121 @@
+.tituloFinalizar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 16px 16px;
+}
+.tarjeta{
+    background-size: cover;
+    border-radius: 8px;
+    padding: 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.misTarjetas{
+    background-color: #d2e9e198;
+    display: flex;
+    flex-direction: column;
+    flex-wrap:nowrap;
+    width:500px;
+    /* border:2px solid black; */
+    border-radius: 8px;
+    padding: 32px;
+    
+}
+.numeroTarjetas button{
+    padding:16px;
+    border-radius: 8px;
+    width:350px;
+    border:none;
+    margin-bottom: 10px;
+    text-align: left;
+
+}
+
+.numeroTarjetas button:hover{
+    
+    background-color: #B6DCB6;
+    /* color:black; */
+    border-radius: 8px;
+    
+}
+.pagarTarjetas button{
+    background-color: #B6DCB6; /* Color de fondo del botón */
+    
+    border-radius: 8px; /* Esquinas redondeadas del botón */
+    border: none; /* Elimina el borde predeterminado del botón */
+    padding: 16px; /* Espacio alrededor del texto del botón */
+    text-align: center; /* Alinea el texto al centro del botón */
+    text-decoration: none; /* Elimina el subrayado del texto del botón */
+    display: inline-block;
+    width:350px;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.nuevaTarjeta{
+    background-color: #d2e9e198;
+    display: flex;
+    flex-direction: column;
+    flex-wrap:nowrap;
+    width:500px;
+    /* border:2px solid black; */
+    border-radius: 8px;
+    padding: 32px;
+}
+.anadirNuevaTarjeta{
+     padding:16px;
+    border-radius: 8px;
+    width:350px;
+    border:none;
+    
+}
+
+.nueva input{
+    border-radius: 8px; /* Esquinas redondeadas del botón */
+    padding: 8px; /* Espacio alrededor del texto del botón */
+    display: inline-block;
+    width:350px;
+    font-size: 16px;
+    margin: 4px 2px;
+    border:none;
+}
+
+.seleccionTarjeta{
+    display: flex;
+    flex-direction: row;
+}
+
+input[type="radio"].miRadio {
+    display: none;
+}
+
+input[type="radio"].miRadio + label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+input[type="radio"].miRadio + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    
+    background: #fff;
+}
+
+input[type="radio"].miRadio:checked + label:before {
+    content: '✔';
+    color: #B6DCB6;
+    background: white;
+    text-align: center;
+}
+
+
+
+

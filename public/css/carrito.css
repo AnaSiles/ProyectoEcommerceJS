@@ -65,13 +65,16 @@
   .nombre{
     margin:32px 24px;
   }
-  .precio{
+  .precio h4{
     display:flex;
-    justify-content:left;
+    flex-direction: row;
+    justify-content:left
+    
   }
   .cantidad{
     display:flex;
     justify-content: space-between;
+    align-items: center;
   }
   .cantidad p{
     margin:16px;

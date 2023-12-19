@@ -1,27 +1,26 @@
 .contenedor{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    
 }
 
-.contenedor div{
-        padding: 30px;
 
-}
 
 .card{
     display: flex;
     flex-direction: column;
     border: 2px solid hsla(var(--hue), 82%, 63%, 1);
     border-radius: 16px;
-    max-width: 250px;
+    width: 22%;
     background: white;
     overflow: hidden;
+    
     
 }
 
 .card img{
     width: 100%;
-    height: 200px;
+    
     background-size: cover;
     background-position: center;
     border-radius: 16px 16px 0px 0px;  

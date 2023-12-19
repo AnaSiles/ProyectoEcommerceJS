@@ -1,0 +1,42 @@
+.contenedorDireccion{
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    padding-top: 16px;
+    margin: 24px 32px;
+
+}
+.nuevaDireccion{
+    background-color: #d2e9e198;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 500px;
+    border-radius: 8px;
+    padding: 32px;
+    margin-right: 32px;
+}
+
+.anadirDireccion{
+    padding:16px;
+    border-radius: 8px;
+    width:350px;
+    border:none;
+    margin-right: 32px;;
+}
+.resumen{
+    border:2px solid black;
+    border-radius: 8px;
+    margin-left: 32px;
+}
+.botonPago{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /*Espacio entre los botones*/
+}
+
+.resumenTotal{
+    display: flex;
+    justify-content: space-around;
+
+}

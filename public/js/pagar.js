@@ -1,7 +1,11 @@
 const host = "http://localhost:8000";
 
-window.addEventListener("load", pintarRegistroDireccion);
-window.addEventListener("load", resumenPedido);
+window.addEventListener("load", () => {
+  pintarRegistroDireccion();
+  resumenPedido();
+  let tarjeta = document.getElementById("numeroTarjeta");
+  tarjeta.innerHTML = `${localStorage.getItem("numero_tarjeta")} seleccionada`;
+});
 
 function registroDireccion() {
   const nombre = document.getElementById("nombre").value;
@@ -72,119 +76,137 @@ function registroDireccion() {
 function pintarRegistroDireccion() {
   const containnerDiv = document.getElementById("registroDireccion");
   const registroHTML = `
-    <div>
+    <div class="nueva">
       <input
           type="text"
           id="nombre"
           placeholder="Nombre"
       />
       </div>
-      <div>
+      <div class="nueva">
       <input
           type="text"
           id="apellidos"
           placeholder="Apellidos"
       />
       </div>
-      <div>
+      <div class="nueva">
       <input
           type="text"
           id="telefono"
           placeholder="Teléfono"
       />
       </div>
-      <div>
+      <div class="nueva">
       <input
           type="text"
           id="email"
           placeholder="Email"
       />
       </div>
-      <div>
+      <div class="nueva">
       <input
           type="text"
           id="calle"
           placeholder="Calle"
       />
       </div>
-      <div>
+      <div class="nueva">
       <input
           type="text"
           id="numero"
           placeholder="Número"
       />
       </div>
-      <div>
+      <div class="nueva">
       <input
           type="text"
           id="resto_direccion"
           placeholder="Resto dirección"
       />
       </div>
-      <div>
+      <div class="nueva">
       <input
           type="text"
           id="poblacion"
           placeholder="Población"
           />
           </div>
-          <div>
+          <div class="nueva">
           <input
               type="text"
               id="cp"
               placeholder="Código Postal"
           />
           </div>
-      <div>
+      <div class="nueva">
       <input
           type="text"
           id="provincia"
           placeholder="Provincia"
       />
       </div>
-      <div>
+      <div class="nueva">
       <input
           type="text"
           id="pais"
           placeholder="País"
       />
       </div>
-     
+     <div class="pagarTarjetas">
 
       <button onClick="registroDireccion()">Añadir Dirección</button>
+      </div>
     `;
   containnerDiv.innerHTML = registroHTML;
 }
 
 function resumenPedido() {
   const precioFinal = localStorage.getItem("precioFinal");
+  const compraid = localStorage.getItem("compraid");
+  const pedido = JSON.parse(localStorage.getItem("pedido"));
   console.log(precioFinal);
-  fetch(`${host}/compras/2`)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (json) {
-      const containerPedido = document.getElementById("resumenPedido");
-      let resumen = "";
+  console.log(compraid);
+  console.log("Datos del pedido almacenados: ", pedido);
+  if (!pedido) {
+    console.log("No hay datos del pedido en localStorage");
+    return;
+  }
+  console.log("Datos del pedido recuperados: ", pedido);
+  const containerPedido = document.getElementById("resumenPedido");
+  let resumen = "";
 
-      for (let i = 0; i < json.length; i++) {
-        resumen += `
-          <div>
-          <h3>${json[i].nombre}</h3>
-          <h4>${json[i].precio}</h4>
-          <p>${json[i].cantidad}</p>
-          <button class=".btn">Eliminar</button>
+  for (let i = 0; i < pedido.length; i++) {
+    resumen += `
+          <div class="resumen-pedido">
+          
+          <div class="descripcion">
+          <div class="nombre">
+          <h4>${pedido[i].nombre}</h4>
+          </div>
+          <div class="precio">
+          <h4>${pedido[i].precio}<i class="bi bi-currency-euro"></i></h4>
+          </div>
+          <div class="cantidad">
+          <button class="btn" id="btn-menos" onClick="disminuirCantidad(${i}, ${compraid}, ${pedido[i].productoid}">-</button>
+          <h4 id="cantidad${pedido[i].productoid}">${pedido[i].cantidad}</h4>
+          <button class="btn" id="btn-mas" onClick="aumentarCantidad"(${i},${compraid}, ${pedido[i].productoid}) >+</button>
+          </div>
+          <button class="btn btn-eliminar" onClick="eliminarProducto(${i},${compraid}, ${pedido[i].productoid}">Eliminar</button>
+          </div>
           </div>`;
-      }
-      resumen += `<h3>Resumen del pedido</h3>
-        <p>
+  }
+  resumen += `
+  <div class="resumenTotal">
+        <h2>
         TOTAL
-        </p>
-        <h2> ${precioFinal}<i class="bi bi-currency-euro" m-color></i></h2>
-        <a href="../html/finalizarCompra.html" class=".btn">Proceder al pago</a>`;
-      containerPedido.innerHTML = resumen;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+        </h2>
+        <h2> ${precioFinal}<i class="bi bi-currency-euro"></i></h2>
+        </div>
+        <div class="botonPago">
+        <a href="../html/finalizarCompra.html" class="btn"
+        >Pagar con tarjeta online</a
+      >
+    </div>`;
+  containerPedido.innerHTML = resumen;
 }

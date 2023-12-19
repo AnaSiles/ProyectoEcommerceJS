@@ -24,7 +24,7 @@ connection.connect(function (error) {
   }
   console.log("Conectado a MySQL");
 });
-// Enpoint de carritos
+// Endpoint de carritos
 
 app.get("/carrito/:id", function (request, response) {
   connection.query(
@@ -46,8 +46,6 @@ app.get("/carrito/:id", function (request, response) {
 app.post(
   "/incremento_cantidad/:compraid/:productoid",
   function (request, response) {
-    console.log("ID del producto recibido: ", request.params.productoid);
-    console.log("ID de la compra recibida: ", request.params.compraid);
     connection.query(
       `SELECT cantidad FROM compraproducto WHERE compraid=${request.params.compraid} AND productoid=${request.params.productoid}`,
       (error, result, fields) => {
@@ -89,6 +87,8 @@ app.post(
           return;
         }
 
+        console.log(result[0]);
+
         let cantidad = result[0].cantidad;
         --cantidad;
 
@@ -112,7 +112,7 @@ app.post(
 // Endpoint de eliminar producto
 
 app.delete(
-  "/eliminarProducto/:productoid/:compraid",
+  "/eliminarProducto/:compraid/:productoid",
   function (request, response) {
     connection.query(
       `DELETE FROM compraproducto WHERE productoid=${request.params.productoid} AND compraid=${request.params.compraid}`,
@@ -141,8 +141,10 @@ app.get("/finalizarCompra/:id", function (request, response) {
       for (let i = 0; i < result.length; i++) {
         let nuevaTarjeta = "";
         for (let j = 0; j < result[i].numero_tarjeta.length; j++) {
-          if (j < 12) {
-            nuevaTarjeta += "*";
+          if (j < 9) {
+            nuevaTarjeta += "";
+          } else if (j >= 9 && j < 12) {
+            nuevaTarjeta += ".";
           } else {
             nuevaTarjeta += result[i].numero_tarjeta[j];
           }
@@ -233,17 +235,133 @@ app.post("/direccion/:usuarioid", function (request, response) {
 // Endpoint de productos
 
 app.get("/productos", function (request, response) {
+  connection.query(`SELECT * FROM productos`, (error, result, fields) => {
+    if (error) {
+      response.status(400).send(`${error.message}`);
+      return;
+    }
+    response.send(result);
+    console.log("Obtiene los datos de todos los productos");
+  });
+});
+
+// Endpoint añadir carrito
+
+app.post("/crearCompra/:usuarioid", function (request, response) {
+  let usuarioid = request.params.usuarioid;
+
   connection.query(
-    `SELECT nombre, descripcion_corta, precio, valoraciones, foto FROM productos`,
+    `INSERT INTO compras (usuariosid,compra_finalizada) VALUES (${usuarioid},0)`,
     (error, result, fields) => {
       if (error) {
         response.status(400).send(`${error.message}`);
         return;
       }
-      response.send(result);
-      console.log("Obtiene los datos de todos los productos");
+      response.send({ message: "Compra creada" });
+      console.log("Compra creada");
     }
   );
+});
+
+app.post("/anadirCarrito/:usuarioid", function (request, response) {
+  let compraid = request.body.compraid;
+  let productoid = request.body.productoid;
+  let cantidad = request.body.cantidad;
+  connection.query(
+    `SELECT * FROM compraproducto where compraid=${compraid} AND productoid=${productoid}`,
+    (error, result, fields) => {
+      if (error) {
+        response.send(400).send(`${error.message}`);
+        return;
+      }
+      if (result.length > 0) {
+        connection.query(
+          `UPDATE compraproducto set cantidad=cantidad+${cantidad} WHERE compraid=${compraid} and productoid=${productoid}`,
+          (error, result, fields) => {
+            if (error) {
+              response.status(400).send(`${error.message}`);
+              return;
+            }
+            connection.query(
+              `UPDATE compras SET precio_final=precio_final+(SELECT precio FROM productos WHERE id=${productoid})*${cantidad} WHERE id=${compraid}`,
+              (error, result, fields) => {
+                if (error) {
+                  response.status(400).send(`${error.message}`);
+                  return;
+                }
+                response.send({
+                  message:
+                    "Producto añadido al carrito y precio toatl actualizado",
+                });
+              }
+            );
+          }
+        );
+      } else {
+        connection.query(
+          `INSERT INTO compraproducto (compraid, productoid, cantidad) VALUES (${compraid}, ${productoid}, ${cantidad})`,
+          (error, result, fields) => {
+            if (error) {
+              response.status(400).send(`${error.message}`);
+              return;
+            }
+            connection.query(
+              `UPDATE compras SET precio_final+(SELECT precio FROM productos WHERE id=${productoid})*${cantidad} WHERE id=${compraid}`,
+              (error, result, fields) => {
+                if (error) {
+                  response.status(400).send(`${error.message}`);
+                  return;
+                }
+                response.send(
+                  "Producto añadido al carrito y precio tital actualizado"
+                );
+              }
+            );
+          }
+        );
+      }
+    }
+  );
+});
+
+// Endpoints para el login y registro
+
+app.post("/login", function (request, response) {
+  connection.query(
+    `SELECT * FROM usuarios WHERE email='${request.body.email}' AND contrasena='${request.body.password}'`,
+    (error, result, fields) => {
+      if (error) {
+        response.status(400).send(`${error.message}`);
+        return;
+      }
+      if (result.length > 0) {
+        response.send(result);
+        console.log("Inicio de sesión con exito");
+      } else {
+        response.status(401).send("Credenciales incorrectas");
+        console.log("Autenticación fallida");
+      }
+    }
+  );
+});
+
+app.post("/registro", function (request, response) {
+  let nombre = request.body.nombre;
+  let apellidos = request.body.apellidos;
+  let email = request.body.email;
+  let contrasena = request.body.contrasena;
+
+  connection.query(
+    `INSERT INTO usuarios (nombre, apellidos, email, contrasena) VALUES ('${nombre}', '${apellidos}', '${email}', '${contrasena}')`,
+    (error, result, fields) => {
+      if (error) {
+        response.status(400).send(`error:${error.message}`);
+        return;
+      }
+      response.send({ message: "Usuario añadido" });
+    }
+  );
+  console.log("Insertar usuario en base de datos");
 });
 
 // Generar la llamada al puerto

@@ -26,10 +26,10 @@
     <!--mi estilo-->
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/header.css" />
-    <link rel="stylesheet" href="/css/cards.css" />
-    <link rel="stylesheet" href="/css/button.css" />
+    <link rel="stylesheet" href="/css/card.css" />
+    <link rel="stylesheet" href="/css/finalizarCompra.css" />
     <link rel="stylesheet" href="/css/carrito.css" />
-    <link rel="stylesheet" href="/css/menu.css" />
+
     <style>
       .carousel-caption {
         top: 1.25rem;
@@ -52,9 +52,9 @@
     <header class="navbar navbar-expand-lg py-4">
       <div class="container position-relative text-nowrap gap-3">
         <div>
-          <img src="../images/Logo.jpeg" alt="Logo" width="60" height="60" />
+          <img src="../images/logo2.jpeg" alt="Logo" width="60" height="60" />
           <a class="navbar-brand"
-            >Mi <span class="text-success">Cumpleaños Feliz</span></a
+            >Mi <span class="tituloWeb">Cumpleaños Feliz</span></a
           >
         </div>
         <form class="d-flex flex-grow-1 gap-3" role="search">
@@ -79,7 +79,7 @@
         </form>
       </div>
     </header>
-    <nav class="navbar navbar-expand-lg bg-body-success">
+    <nav class="navbar navbar-expand-lg bg-body-success wrap">
       <div class="container">
         <button
           class="navbar-toggler"
@@ -111,18 +111,18 @@
               href="html/carrito.html"
               >Mis pedidos</a
             >
-            <a class="nav-link" href="login.html">Login</a>
+            <a class="nav-link" href="html/login.html">Login</a>
           </div>
         </div>
       </div>
     </nav>
-    <section>
+    <section class="wrap">
       <div class="container d-flex justify-content-between">
         <h3>Las mejores tartas de cumpleaños</h3>
       </div>
       <div id="productos" class="contenedor"></div>
     </section>
-    <section id="garantias" class="py-5">
+    <section id="garantias" class="py-5 wrap">
       <div class="container d-flex justify-content-between">
         <div class="d-flex align-items-center gap-3">
           <i class="bi bi-credit-card h2 text-success"></i>
@@ -212,6 +212,6 @@
         </div>
       </div>
     </footer>
-    <script src="js/productos.js"></script>
+    <script src="/js/productos.js"></script>
   </body>
 </html>
