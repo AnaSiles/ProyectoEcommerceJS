@@ -21,10 +21,8 @@ function login() {
         console.log("Inicio de sesión ok");
         localStorage.setItem("usuarioid", json[0].id);
         localStorage.setItem("nombre", json[0].nombre);
+        verificarCompra();
         window.location.href = "../index.html";
-        usuario.innerHTML = `<a class="nav-link" href="#">Usuario: ${localStorage.getItem(
-          "nombre"
-        )}${localStorage.getItem("nombre")}</a>`;
       } else {
         console.log("Error en el acceso:datos erroneos");
         alert("Error al inicio de sesión: email o password erróneos");
@@ -70,5 +68,25 @@ function registroCliente() {
     })
     .catch(function (error) {
       console.log(error.message);
+    });
+}
+
+function verificarCompra() {
+  const usuarioid = localStorage.getItem("usuarioid");
+
+  fetch(`${host}/compras/${usuarioid}`)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (json) {
+      if (json.legth > 0) {
+        console.log("Cliente con compra creada");
+
+        // Falta añadir la función de cargar la compra creada
+      } else {
+        console.log("Cliente no tiene compra creada");
+
+        // Falta añadir crear compra
+      }
     });
 }

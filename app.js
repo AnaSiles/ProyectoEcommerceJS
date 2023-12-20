@@ -39,6 +39,20 @@ app.get("/carrito/:id", function (request, response) {
     }
   );
 });
+
+app.get("/compras/usuarioid", function (request, response) {
+  connection.query(
+    `SELECT * FROM compras WHERE usuarioid=${request.params.usuarioid}`,
+    (error, result, fields) => {
+      if (error) {
+        response.status(400).send(`${error.message}`);
+        return;
+      }
+      response.send(result);
+      console.log("Obtiene todas las compras del usuario con el :usuarioid");
+    }
+  );
+});
 // SELECT compras.id, productos.nombre, productos.precio, productos.foto, compraproducto.cantidad FROM compras JOIN compraproducto ON compras.id=compraproducto.compraid JOIN productos ON productos.id=compraproducto.productoid WHERE compras.id=1;
 
 // Endpoints para aumentar y disminuir cantidad

@@ -1,16 +1,32 @@
 var host = "http://localhost:8000";
 
 window.addEventListener("load", productos);
-window.addEventListener("load", () => {
-  let usuario = document.getElementById("nombre");
-  if (localStorage.getItem("nombre")) {
-    usuario.innerHTML = `${localStorage.getItem("nombre")}`;
-  } else {
-    usuario.innerHTML = "No estás logueado";
-  }
-});
+window.addEventListener("load", mostrarNombreUsuario);
 
-let usuarioid = 4;
+function mostrarNombreUsuario() {
+  const usuario = document.getElementById("usuario");
+  const logout = document.getElementById("logout");
+  const nombre = localStorage.getItem("nombre");
+  if (usuario && logout) {
+    if (nombre) {
+      usuario.innerHTML = `<a class="nav-link" href="#">Usuario:${nombre}</a>`;
+      logout.style.display = "block";
+      logout.addEventListener("click", logout);
+    } else {
+      usuario.innerHTML = `<a class="nav-link active" aria-current="page" href="html/carrito.html">Mis pedidos</a>
+      <a class="nav-link" href="html/login.html">Login</a>`;
+      logout.style.display = "none";
+    }
+  }
+}
+
+function logout() {
+  localStorage.removeItem("usuarioid");
+  localStorage.removeItem("nombre");
+
+  window.location.href = "../index.html";
+}
+
 let compra_finalizada = 1;
 
 function productos() {
