@@ -1,31 +1,25 @@
-var host = "http://localhost:8000";
-
 window.addEventListener("load", productos);
-window.addEventListener("load", mostrarNombreUsuario);
+// window.addEventListener("load", mostrarNombreUsuario);
 
-function mostrarNombreUsuario() {
-  const usuario = document.getElementById("usuario");
-  const logout = document.getElementById("logout");
-  const nombre = localStorage.getItem("nombre");
-  if (usuario && logout) {
-    if (nombre) {
-      usuario.innerHTML = `<a class="nav-link" href="#">Usuario:${nombre}</a>`;
-      logout.style.display = "block";
-      logout.addEventListener("click", logout);
-    } else {
-      usuario.innerHTML = `<a class="nav-link active" aria-current="page" href="html/carrito.html">Mis pedidos</a>
-      <a class="nav-link" href="html/login.html">Login</a>`;
-      logout.style.display = "none";
-    }
-  }
-}
-
-function logout() {
-  localStorage.removeItem("usuarioid");
-  localStorage.removeItem("nombre");
-
-  window.location.href = "../index.html";
-}
+// function mostrarNombreUsuario() {
+//   console.log("ejecutando mostrarNombreUsuario");
+//   const usuario = document.getElementById("usuario");
+//   const logout = document.getElementById("logout");
+//   const nombre = localStorage.getItem("nombre");
+//   console.log("Nombrel del usuario:", nombre);
+//   if (usuario && logout) {
+//     if (nombre) {
+//       usuario.innerHTML = `<a class="nav-link" href="#">Usuario:${nombre}</a>`;
+//       logout.style.display = "block";
+//       logout.textContent = "Logout";
+//       logout.onclick = logoutUser;
+//     } else {
+//       usuario.innerHTML = `<a class="nav-link active" aria-current="page" href="html/carrito.html">Mis pedidos</a>
+//       <a class="nav-link" href="html/login.html">Login</a>`;
+//       logout.style.display = "none";
+//     }
+//   }
+// }
 
 let compra_finalizada = 1;
 

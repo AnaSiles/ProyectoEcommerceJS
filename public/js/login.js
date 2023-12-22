@@ -1,6 +1,18 @@
-var host = "http://localhost:8000";
+window.addEventListener("load", () => {
+  const logout = document.getElementById("usuario");
+  if (localStorage.getItem("nombre")) {
+    logout.innerHTML = `  <a class="nav-link" href="#">Usuario: ${localStorage.getItem(
+      "nombre"
+    )}</a>
+    <a id="logout" class="nav-link" onClick="logoutUser()">Logout</a>`;
+    actualizarGlobo();
+  } else {
+    logout.innerHTML = `<a id="logout" class="nav-link" href="/html/login.html">Accede o regístrate</a>`;
+  }
+});
 
 function login() {
+  console.log("Ejecutando login");
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   fetch(`${host}/login`, {
@@ -21,7 +33,9 @@ function login() {
         console.log("Inicio de sesión ok");
         localStorage.setItem("usuarioid", json[0].id);
         localStorage.setItem("nombre", json[0].nombre);
-        verificarCompra();
+
+        carrito();
+        actualizarGlobo();
         window.location.href = "../index.html";
       } else {
         console.log("Error en el acceso:datos erroneos");
@@ -29,8 +43,18 @@ function login() {
       }
     })
     .catch(function (error) {
-      console.log(error.message);
+      console.log("Error en la petición:", error.message);
     });
+}
+
+function logoutUser() {
+  console.log("Ejecutando logoutUser");
+  localStorage.removeItem("usuarioid");
+  localStorage.removeItem("nombre");
+
+  window.location.href = "../index.html";
+  mostrarNombreUsuario();
+  actualizarGlobo();
 }
 
 function registroCliente() {
@@ -68,25 +92,5 @@ function registroCliente() {
     })
     .catch(function (error) {
       console.log(error.message);
-    });
-}
-
-function verificarCompra() {
-  const usuarioid = localStorage.getItem("usuarioid");
-
-  fetch(`${host}/compras/${usuarioid}`)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (json) {
-      if (json.legth > 0) {
-        console.log("Cliente con compra creada");
-
-        // Falta añadir la función de cargar la compra creada
-      } else {
-        console.log("Cliente no tiene compra creada");
-
-        // Falta añadir crear compra
-      }
     });
 }

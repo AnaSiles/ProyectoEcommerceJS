@@ -96,6 +96,9 @@ footer {
     margin: 0% auto;
   
   }
+  .nav-link{
+    cursor: pointer;
+  }
   
     
   

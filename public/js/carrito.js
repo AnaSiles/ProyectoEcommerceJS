@@ -1,11 +1,47 @@
-var host = "http://localhost:8000";
-
 window.addEventListener("load", carrito);
+function verficarCompra() {
+  const usuarioid = localStorage.getItem("usuarioid");
 
-const compraid = 2;
+  if (!usuarioid) {
+    mostrarCarritoVacio();
+    return;
+  }
+
+  fetch(`${host}/compra/${usuarioid}`)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (compra) {
+      if (compra && compra.id) {
+        localStorage.setItem("comprid", compra.id);
+        carrito();
+      } else {
+        mostrarCarritoVacio();
+      }
+    })
+    .catch(function (error) {
+      console.log("Error en la petición:", error.message);
+    });
+}
+
+function mostrarCarritoVacio() {
+  const containerCarrito = document.getElementById("carrito");
+
+  containerCarrito.innerHTML = `
+      <div class="carrito-vacio">
+        <h2>Tu carrito está vacío</h2>
+        <p>¡Parece que aún no has añadido ningún producto a tu carrito!</p>
+      </div>
+    `;
+  actualizarGlobo();
+}
+
 localStorage.setItem("compraid", compraid);
 console.log("compraid guardado:", localStorage.getItem("compraid"));
+
 function carrito() {
+  const compraid = localStorage.getItem("compraid");
+  console.log("compraid guardado:", compraid);
   fetch(`${host}/carrito/${compraid}`)
     .then(function (response) {
       return response.json();
@@ -16,6 +52,7 @@ function carrito() {
         "Datos del pedido guardados: ",
         localStorage.getItem("pedido")
       );
+      actualizarGlobo();
 
       const containerCarrito = document.getElementById("carrito");
       const containerPrecioFinal = document.getElementById("total");
@@ -84,6 +121,17 @@ function carrito() {
     });
 }
 
+function actualizarGlobo() {
+  const pedido = JSON.parse(localStorage.getItem("pedido"));
+  let totalProductos = 0;
+  for (let i = 0; i < pedido.length; i++) {
+    totalProductos += pedido[i].cantidad;
+  }
+
+  const spanCarrito = document.getElementById("globoCarrito");
+  spanCarrito.textContent = totalProductos;
+}
+
 function incrementarCantidad(compraid, productoid) {
   fetch(`${host}/incremento_cantidad/${compraid}/${productoid}`, {
     method: "POST",
@@ -96,6 +144,7 @@ function incrementarCantidad(compraid, productoid) {
       cantidadProducto.innerHTML = json.cantidad;
 
       carrito();
+      actualizarGlobo();
       resumenPedido(); // Añadido para actualizar el resumen después de cambiar la cantidad
     })
     .catch(function (error) {
@@ -114,6 +163,7 @@ function disminuirCantidad(compraid, productoid) {
       const cantidadProducto = document.getElementById(`cantidad${productoid}`);
       cantidadProducto.innerHTML = json.cantidad;
       carrito();
+      actualizarGlobo();
       resumenPedido(); // Añadido para actualizar el resumen después de cambiar la cantidad
     })
     .catch(function (error) {
@@ -131,6 +181,7 @@ function eliminarProducto(productoid, compraid) {
     .then(function (json) {
       alert("Producto eliminado correctamente");
       carrito();
+      actualizarGlobo();
       resumenPedido(); // Añadido para actualizar el resumen después de cambiar la cantidad
     })
     .catch(function (error) {

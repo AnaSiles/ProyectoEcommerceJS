@@ -348,13 +348,7 @@ app.post("/login", function (request, response) {
         response.status(400).send(`${error.message}`);
         return;
       }
-      if (result.length > 0) {
-        response.send(result);
-        console.log("Inicio de sesión con exito");
-      } else {
-        response.status(401).send("Credenciales incorrectas");
-        console.log("Autenticación fallida");
-      }
+      response.send(result);
     }
   );
 });
