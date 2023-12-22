@@ -1,4 +1,4 @@
-const host = "http://localhost:8000";
+const host = "http://ec2-13-51-166-191.eu-north-1.compute.amazonaws.com:8000";
 
 window.addEventListener("load", () => {
   pintarRegistroDireccion();
