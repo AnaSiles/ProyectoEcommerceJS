@@ -1,1 +1,5 @@
-const host = "http://localhost:8000";
+const dotenv = require("dotenv");
+dotenv.config();
+const host = process.env.HOST;
+
+module.exports = host;

@@ -1,3 +1,5 @@
+const host = require("./config");
+
 window.addEventListener("load", productos);
 // window.addEventListener("load", mostrarNombreUsuario);
 
