@@ -1,6 +1,5 @@
-const dotenv = require('dotenv');
-dotenv.config();
-const host = process.env.HOST;
+const host = require("./config");
+
 
 window.addEventListener("load", finalizarCompra);
 window.addEventListener("load", pintarRegistroTarjeta);
