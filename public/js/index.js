@@ -1,3 +1,7 @@
+const dotenv = require('dotenv');
+dotenv.config();
+const host = process.env.HOST;
+
 window.addEventListener("load", productos);
 // window.addEventListener("load", mostrarNombreUsuario);
 
