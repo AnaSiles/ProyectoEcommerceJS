@@ -1,5 +1,5 @@
-const host = require("./config");
-
+// const host = require("./config");
+import { host } from "./config.js";
 
 window.addEventListener("load", () => {
   const logout = document.getElementById("usuario");

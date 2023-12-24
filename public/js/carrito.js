@@ -1,6 +1,4 @@
-
-const host = require("./config");
-
+import { host } from "./config.js";
 
 window.addEventListener("load", carrito);
 function verficarCompra() {
