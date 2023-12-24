@@ -1,4 +1,6 @@
+
 const host = require("./config");
+
 
 window.addEventListener("load", carrito);
 function verficarCompra() {

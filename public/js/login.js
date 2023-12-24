@@ -1,5 +1,6 @@
 const host = require("./config");
 
+
 window.addEventListener("load", () => {
   const logout = document.getElementById("usuario");
   if (localStorage.getItem("nombre")) {
