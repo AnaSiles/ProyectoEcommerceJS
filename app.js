@@ -1,7 +1,8 @@
 // const express = require("express");
 import express from "express";
 const app = express();
-const mysql = require("mysql2");
+// const mysql = require("mysql2");
+import mysql from "mysql2";
 
 app.use(express.static("public"));
 
