@@ -3,6 +3,7 @@ import { host } from "./config.js";
 console.log(host);
 
 window.addEventListener("load", carrito);
+
 function verficarCompra() {
   const usuarioid = localStorage.getItem("usuarioid");
 
@@ -40,8 +41,8 @@ function mostrarCarritoVacio() {
   actualizarGlobo();
 }
 
-localStorage.setItem("compraid", compraid);
-console.log("compraid guardado:", localStorage.getItem("compraid"));
+// localStorage.setItem("compraid", compraid);
+// console.log("compraid guardado:", localStorage.getItem("compraid"));
 
 function carrito() {
   const compraid = localStorage.getItem("compraid");
