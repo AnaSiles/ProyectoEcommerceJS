@@ -1,6 +1,3 @@
-// const host = require("./config");
-import { host } from "./config.js";
-
 window.addEventListener("load", () => {
   const logout = document.getElementById("usuario");
   if (localStorage.getItem("nombre")) {
@@ -13,6 +10,9 @@ window.addEventListener("load", () => {
     logout.innerHTML = `<a id="logout" class="nav-link" href="/html/login.html">Accede o regístrate</a>`;
   }
 });
+
+// document.querySelector(".btn").addEventListener("click", login);
+// document.getElementById("logout").addEventListener("click", logoutUser);
 
 function login() {
   console.log("Ejecutando login");

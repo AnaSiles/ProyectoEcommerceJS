@@ -1,8 +1,7 @@
-// const express = require("express");
-import express from "express";
+const express = require("express");
+
 const app = express();
-// const mysql = require("mysql2");
-import mysql from "mysql2";
+const mysql = require("mysql2");
 
 app.use(express.static("public"));
 
@@ -12,8 +11,8 @@ app.use(express.json());
 // Crear conexion con mysql
 
 const connection = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "ecommerce",
+  host: "localhost",
+  user: "root",
   password: "Asr020379",
   database: "ecommerce",
 });

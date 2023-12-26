@@ -1,7 +1,3 @@
-import { host } from "./config.js";
-
-console.log(host);
-
 window.addEventListener("load", carrito);
 
 function verficarCompra() {

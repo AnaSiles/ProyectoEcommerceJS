@@ -1,5 +1,4 @@
-// const host = require("./config");
-import { host } from "./config.js";
+// const host = "http://localhost:8000";
 
 window.addEventListener("load", productos);
 // window.addEventListener("load", mostrarNombreUsuario);
