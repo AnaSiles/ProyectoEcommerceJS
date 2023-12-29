@@ -19,6 +19,7 @@ function registroDireccion() {
   const cp = document.getElementById("cp").value;
   const provincia = document.getElementById("provincia").value;
   const pais = document.getElementById("pais").value;
+  const usuarioid = localStorage.getItem("usuarioid");
 
   const camposRegistro = [
     nombre,
@@ -32,6 +33,7 @@ function registroDireccion() {
     cp,
     provincia,
     pais,
+    usuarioid,
   ];
   console.log(camposRegistro);
 
@@ -42,7 +44,7 @@ function registroDireccion() {
     }
   }
 
-  fetch(`${host}/direccion/2`, {
+  fetch(`${host}/direccion/${usuarioid}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -59,6 +61,7 @@ function registroDireccion() {
       cp: cp,
       provincia: provincia,
       pais: pais,
+      usuarioid,
     }),
   })
     .then(function (response) {

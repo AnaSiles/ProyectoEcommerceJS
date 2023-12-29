@@ -107,7 +107,7 @@ function carrito() {
             </div>
           </div>
           <div class="botones">
-              <a href="../html/finalizarCompra.html" class="btn"
+              <a href="../html/formaPago.html" class="btn"
               >Proceder al pago</a
             >
           </div>

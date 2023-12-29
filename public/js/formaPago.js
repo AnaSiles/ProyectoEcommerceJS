@@ -7,15 +7,18 @@ const compraid = localStorage.getItem("compraid");
 
 function finalizarCompra() {
   console.log("finalizarCompra se ha llamado");
-  fetch(`${host}/finalizarCompra/${compraid}`)
+  let usuarioid = localStorage.getItem("usuarioid"); //Aquí recuperamos el ID del usuario
+  fetch(`${host}/finalizarCompra/${usuarioid}`) //Hacemos la petición con el ID del usuario
     .then(function (response) {
+      console.log("Respuesta del servidor recibida: ", response);
       return response.json();
     })
     .then(function (json) {
+      console.log("Respuesta del servidor convertida a JSON: ", json);
       const containerTarjetas = document.getElementById("finalizarCompra");
       let tarjetasHTML = "";
       for (let i = 0; i < json.length; i++) {
-        console.log(json[i].id);
+        console.log("Procesando tarjeta numero", i, ":", json[i].id);
         tarjetasHTML += `
         <div class="numeroTarjetas">
         
@@ -29,7 +32,7 @@ function finalizarCompra() {
        </div>`;
       }
       tarjetasHTML += `<div class="pagarTarjetas">
-      <button onclick="pagarConTarjetaSeleccionada(compraid)">Pagar con esta tarjeta</button>
+      <button onclick="pagarConTarjetaSeleccionada(${compraid})">Pagar con esta tarjeta</button>
       </div>`;
       containerTarjetas.innerHTML = tarjetasHTML;
     })
@@ -108,7 +111,7 @@ function registroTarjeta() {
   const tipo_tarjeta = document.getElementById("tipo_tarjeta").value;
   const caducidad = document.getElementById("caducidad").value;
   const codigo_seguridad = document.getElementById("codigo_seguridad").value;
-  const usuarioid = document.getElementById("usuarioid").value;
+  const usuarioid = localStorage.getItem("usuarioid");
 
   const camposRegistro = [
     numero_tarjeta,
@@ -126,7 +129,7 @@ function registroTarjeta() {
     }
   }
 
-  fetch(`${host}/anadirTarjeta/1`, {
+  fetch(`${host}/anadirTarjeta/${usuarioid}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -146,6 +149,14 @@ function registroTarjeta() {
     .then(function (json) {
       alert("Tarjeta registrada correctamente");
       console.log(json);
+
+      document.getElementById("numero_tarjeta").value = "";
+      document.getElementById("titular_tarjeta").value = "";
+      document.getElementById("tipo_tarjeta").value = "";
+      document.getElementById("caducidad").value = "";
+      document.getElementById("codigo_seguridad").value = "";
+
+      finalizarCompra();
     })
     .catch(function (error) {
       console.log(error.message);
@@ -212,4 +223,46 @@ function pintarRegistroTarjeta() {
       </div>
       `;
   containerDiv.innerHTML = registroHTML;
+}
+
+function actualizarListadoTarjetas() {
+  console.log("actualizarlistadoTarjetas se ha llamado");
+  // Esta función no necesita ningún parámetro, ya que obtiene toda la información que necesita del servidor y del alamacenamiento local del navegador
+  // Obtenemos el ID del usuario actual del alamacenamiento local
+  const usuarioid = localStorage.getItem("usuarioid");
+
+  // Hacemos la petición al servidor para obtener las tarjetas asociadas al usuario
+  fetch(`${host}/finalizarCompra/${usuarioid}`)
+    .then(function (response) {
+      console.log("Respuesta del servidor recibida: ", response);
+      return response.json();
+    })
+    .then(function (json) {
+      // Actualizamos la interfaz del usuario. Vamos a crear una cadena de html para cada tarjeta igual que el html de la función de finalizar compra
+
+      console.log("Respuesta del servidor convertida a JSON: ", json);
+      const containerTarjetas = document.getElementById("containerTarjetas");
+      let tarjetasHTML = "";
+      for (let i = 0; i < json.length; i++) {
+        console.log("Procesando tarjeta numero", i, ":", json[i].id);
+        tarjetasHTML += `
+      <div class="numeroTarjetas">
+      
+      <button onclick="guardarTarjeta(${json[i].id},'${json[i].nuevaTarjeta}')">
+<input type="radio" id="tarjeta${json[i].id}" name="tarjeta" value="${json[i].id}" class="miRadio" onClick="seleccionarTarjeta('tarjeta${json[i].id}')">
+<label for="tarjeta${json[i].id}">
+  ${json[i].tipo_tarjeta}  ${json[i].nuevaTarjeta}
+</label>
+</button>
+      
+     </div>`;
+      }
+      tarjetasHTML += `<div class="pagarTarjetas">
+    <button onclick="pagarConTarjetaSeleccionada(compraid)">Pagar con esta tarjeta</button>
+    </div>`;
+      containerTarjetas.innerHTML = tarjetasHTML;
+    })
+    .catch(function (error) {
+      console.log("Error:", error);
+    });
 }

@@ -144,9 +144,9 @@ app.delete(
 );
 
 // Endpoint formas_pago
-app.get("/finalizarCompra/:id", function (request, response) {
+app.get("/finalizarCompra/:usuarioid", function (request, response) {
   connection.query(
-    `SELECT formas_pago.id,formas_pago.tipo_tarjeta, formas_pago.numero_tarjeta, formas_pago.usuarioid FROM formas_pago where formas_pago.usuarioid=${request.params.id}`,
+    `SELECT formas_pago.id,formas_pago.tipo_tarjeta, formas_pago.numero_tarjeta, formas_pago.usuarioid FROM formas_pago where formas_pago.usuarioid=${request.params.usuarioid}`,
 
     (error, result, fields) => {
       if (error) {
@@ -218,6 +218,8 @@ app.post("/anadirTarjeta/:usuarioid", function (request, response) {
   );
   console.log("Insertar tarjeta en base de datos");
 });
+
+// Endpoint para añadir dirección
 
 app.post("/direccion/:usuarioid", function (request, response) {
   console.log(request.body);
