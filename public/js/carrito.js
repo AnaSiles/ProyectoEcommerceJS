@@ -9,7 +9,12 @@ function actualizarGlobo() {
 
   const spanCarrito = document.getElementById("globoCarrito");
   if (spanCarrito) {
-    spanCarrito.textContent = totalProductos;
+    if (totalProductos) {
+      spanCarrito.textContent = totalProductos;
+      spanCarrito.style.display = "inline";
+    } else {
+      spanCarrito.style.display = "none";
+    }
   }
 }
 
