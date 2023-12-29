@@ -1,41 +1,35 @@
 window.addEventListener("load", carrito);
 
-function verficarCompra() {
-  const usuarioid = localStorage.getItem("usuarioid");
-
-  if (!usuarioid) {
-    mostrarCarritoVacio();
-    return;
+function actualizarGlobo() {
+  const pedido = JSON.parse(localStorage.getItem("pedido"));
+  let totalProductos = 0;
+  for (let i = 0; i < pedido.length; i++) {
+    totalProductos += pedido[i].cantidad;
   }
 
-  fetch(`${host}/compra/${usuarioid}`)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (compra) {
-      if (compra && compra.id) {
-        localStorage.setItem("comprid", compra.id);
-        carrito();
-      } else {
-        mostrarCarritoVacio();
-      }
-    })
-    .catch(function (error) {
-      console.log("Error en la petición:", error.message);
-    });
+  const spanCarrito = document.getElementById("globoCarrito");
+  if (spanCarrito) {
+    spanCarrito.textContent = totalProductos;
+  }
 }
 
-function mostrarCarritoVacio() {
-  const containerCarrito = document.getElementById("carrito");
+window.mostrarCarritoVacio = function () {
+  const containerCarrito = document.getElementById("globoCarrito");
 
-  containerCarrito.innerHTML = `
-      <div class="carrito-vacio">
-        <h2>Tu carrito está vacío</h2>
-        <p>¡Parece que aún no has añadido ningún producto a tu carrito!</p>
-      </div>
-    `;
+  if (containerCarrito) {
+    globoCarrito.style.display = "none";
+  }
   actualizarGlobo();
-}
+};
+
+window.mostrarCarritoConCompra = function (cantidad) {
+  const globoCarrito = document.getElementById("globoCarrito");
+
+  if (globoCarrito) {
+    globoCarrito.textContent = cantidad;
+    globoCarrito.style.display = "inline";
+  }
+};
 
 // localStorage.setItem("compraid", compraid);
 // console.log("compraid guardado:", localStorage.getItem("compraid"));
@@ -53,14 +47,20 @@ function carrito() {
         "Datos del pedido guardados: ",
         localStorage.getItem("pedido")
       );
+      const globoCarrito = document.getElementById("globoCarrito");
+      if (globoCarrito) {
+        globoCarrito.textContent = json.length;
+      }
       actualizarGlobo();
 
       const containerCarrito = document.getElementById("carrito");
       const containerPrecioFinal = document.getElementById("total");
-      let precioFinal = 0;
-      containerCarrito.innerHTML = "";
-      for (let i = 0; i < json.length; i++) {
-        containerCarrito.innerHTML += `
+
+      if (containerCarrito && containerPrecioFinal) {
+        let precioFinal = 0;
+        containerCarrito.innerHTML = "";
+        for (let i = 0; i < json.length; i++) {
+          containerCarrito.innerHTML += `
         <div class="producto">
     <img
       src="${json[i].foto}"
@@ -85,12 +85,12 @@ function carrito() {
   
   </div>
   </div>`;
-        if (!isNaN(json[i].precio) && !isNaN(json[i].cantidad)) {
-          precioFinal += json[i].precio * json[i].cantidad;
-        } else {
-          console.log("Error:precio o cantidad no son números", json[i]);
-        }
-        containerPrecioFinal.innerHTML = `
+          if (!isNaN(json[i].precio) && !isNaN(json[i].cantidad)) {
+            precioFinal += json[i].precio * json[i].cantidad;
+          } else {
+            console.log("Error:precio o cantidad no son números", json[i]);
+          }
+          containerPrecioFinal.innerHTML = `
         <div class="resumen-pedido">
           <h3>Resumen del pedido</h3>
           <p>
@@ -109,28 +109,18 @@ function carrito() {
         </div>
       
       `;
+        }
+        //   Es aquí donde guardamos precioFinal en el almacenamiento local
+        localStorage.setItem("precioFinal", precioFinal);
+        console.log(
+          "precioFinal guardado: ",
+          localStorage.getItem("precioFinal")
+        );
       }
-      //   Es aquí donde guardamos precioFinal en el almacenamiento local
-      localStorage.setItem("precioFinal", precioFinal);
-      console.log(
-        "precioFinal guardado: ",
-        localStorage.getItem("precioFinal")
-      );
     })
     .catch(function (error) {
       console.log(error);
     });
-}
-
-function actualizarGlobo() {
-  const pedido = JSON.parse(localStorage.getItem("pedido"));
-  let totalProductos = 0;
-  for (let i = 0; i < pedido.length; i++) {
-    totalProductos += pedido[i].cantidad;
-  }
-
-  const spanCarrito = document.getElementById("globoCarrito");
-  spanCarrito.textContent = totalProductos;
 }
 
 function incrementarCantidad(compraid, productoid) {

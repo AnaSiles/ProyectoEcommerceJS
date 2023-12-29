@@ -1,29 +1,32 @@
 // const host = "http://localhost:8000";
 
 window.addEventListener("load", productos);
-// window.addEventListener("load", mostrarNombreUsuario);
+window.addEventListener("load", manejarIncioSesion);
 
-// function mostrarNombreUsuario() {
-//   console.log("ejecutando mostrarNombreUsuario");
-//   const usuario = document.getElementById("usuario");
-//   const logout = document.getElementById("logout");
-//   const nombre = localStorage.getItem("nombre");
-//   console.log("Nombrel del usuario:", nombre);
-//   if (usuario && logout) {
-//     if (nombre) {
-//       usuario.innerHTML = `<a class="nav-link" href="#">Usuario:${nombre}</a>`;
-//       logout.style.display = "block";
-//       logout.textContent = "Logout";
-//       logout.onclick = logoutUser;
-//     } else {
-//       usuario.innerHTML = `<a class="nav-link active" aria-current="page" href="html/carrito.html">Mis pedidos</a>
-//       <a class="nav-link" href="html/login.html">Login</a>`;
-//       logout.style.display = "none";
-//     }
-//   }
-// }
+function manejarIncioSesion() {
+  // Obtiene los elementos del DOM que vamos a necesitar
+  const logout = document.getElementById("usuario");
+  const carrito = document.getElementById("carrito");
+  // Comprueba si el usuario está identificado
+  if (localStorage.getItem("nombre")) {
+    // Si el usuario está identificado, muestra su nombre y el botón de logout
+    logout.innerHTML = `
+    <a class="nav-link" href="#">Usuario:
+    ${localStorage.getItem("nombre")}</a>
+    <a id="logout" class="nav-link" onClick="logoutUser()">Logout</a>`;
+    // // Mostramos el botón de carrito
+    carrito.style.display = "block";
+    // actualizarGlobo();
+    // verificarCompra();
+  } else {
+    // Si el usuario no está identificado, muestra el enlace para iniciar sesión o registrarse
+    logout.innerHTML = `<a id="logout" class="nav-link" href="/html/login.html">Accede o regístrate</a>`;
+    // Ocultamos el botón del carrito
+    carrito.style.display = "none";
+  }
+}
 
-let compra_finalizada = 1;
+// let compra_finalizada = 1;
 
 function productos() {
   fetch(`${host}/productos`)
@@ -72,10 +75,18 @@ function productos() {
 }
 
 function anadirCarrito(productoId) {
-  let compraid = parseInt(localStorage.getItem("compraid"));
+  let compraid = localStorage.getItem("compraid");
+  let usuarioid = localStorage.getItem("usuarioid");
+  if (compraid !== null && compraid !== "" && !isNaN(compraid)) {
+    compraid = parseInt(compraid);
+  } else {
+    compraid = null;
+  }
+  console.log("compraid: ", compraid);
   let cantidad = 1;
 
   if (compraid == null) {
+    console.log("Creando nueva compra...");
     fetch(`${host}/crearCompra/${usuarioid}`, {
       method: "POST",
       headers: {
@@ -88,19 +99,33 @@ function anadirCarrito(productoId) {
         return response.json();
       })
       .then(function (json) {
-        localStorage.setItem("compraid", json.insertId);
-        compraid = json.insertId;
+        console.log("json: ", json);
+        if (json.insertId && !isNaN(json.insertId)) {
+          localStorage.setItem("compraid", json.insertId);
+          compraid = json.insertId;
+        } else {
+          console.log("error: insertId is not a number");
+        }
         actualizarCarrito(compraid, productoId, cantidad);
+        actualizarGlobo();
       })
       .catch(function (error) {
-        console.log(error);
+        console.log("Error:", error);
       });
   } else {
     actualizarCarrito(compraid, productoId, cantidad);
+    actualizarGlobo();
   }
 }
 
 function actualizarCarrito(compraid, productoId, cantidad) {
+  let usuarioid = localStorage.getItem("usuarioid");
+
+  console.log("usuarioid:", usuarioid); // Añade esto
+  console.log("compraid:", compraid); // Añade esto
+  console.log("productoId:", productoId); // Añade esto
+  console.log("cantidad:", cantidad); // Añade esto
+
   fetch(`${host}/anadirCarrito/${usuarioid}`, {
     method: "POST",
     headers: {
@@ -113,14 +138,22 @@ function actualizarCarrito(compraid, productoId, cantidad) {
     }),
   })
     .then(function (response) {
-      return response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.text(); // Primero obtenemos el texto de la respuesta
+    })
+    .then(function (text) {
+      console.log("Response body:", text); // Imprimimos el texto de la respuesta
+      return JSON.parse(text); // Intentamos convertir el texto a JSON
     })
     .then(function (json) {
       alert("Producto añadido con éxito");
       console.log("recargando la pagina");
       carrito();
+      actualizarGlobo();
     })
     .catch(function (error) {
-      console.log(error);
+      console.log("Error: ", error);
     });
 }

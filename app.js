@@ -41,9 +41,9 @@ app.get("/carrito/:id", function (request, response) {
   );
 });
 
-app.get("/compras/usuarioid", function (request, response) {
+app.get("/compras/:usuarioid", function (request, response) {
   connection.query(
-    `SELECT * FROM compras WHERE usuarioid=${request.params.usuarioid}`,
+    `SELECT * FROM compras WHERE usuariosid=${request.params.usuarioid}`,
     (error, result, fields) => {
       if (error) {
         response.status(400).send(`${error.message}`);
@@ -272,8 +272,8 @@ app.post("/crearCompra/:usuarioid", function (request, response) {
         response.status(400).send(`${error.message}`);
         return;
       }
-      response.send({ message: "Compra creada" });
-      console.log("Compra creada");
+      console.log("Compra creada con ID: ", result.insertId);
+      response.send({ message: "Compra creada", insertId: result.insertId });
     }
   );
 });
@@ -306,7 +306,7 @@ app.post("/anadirCarrito/:usuarioid", function (request, response) {
                 }
                 response.send({
                   message:
-                    "Producto añadido al carrito y precio toatl actualizado",
+                    "Producto añadido al carrito y precio total actualizado",
                 });
               }
             );
@@ -321,15 +321,16 @@ app.post("/anadirCarrito/:usuarioid", function (request, response) {
               return;
             }
             connection.query(
-              `UPDATE compras SET precio_final+(SELECT precio FROM productos WHERE id=${productoid})*${cantidad} WHERE id=${compraid}`,
+              `UPDATE compras SET precio_final=precio_final+(SELECT precio FROM productos WHERE id=${productoid})*${cantidad} WHERE id=${compraid}`,
               (error, result, fields) => {
                 if (error) {
                   response.status(400).send(`${error.message}`);
                   return;
                 }
-                response.send(
-                  "Producto añadido al carrito y precio tital actualizado"
-                );
+                response.send({
+                  message:
+                    "Producto añadido al carrito y precio total actualizado",
+                });
               }
             );
           }
