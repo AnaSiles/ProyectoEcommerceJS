@@ -26,9 +26,10 @@
     <!--mi estilo-->
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/header.css" />
-    <link rel="stylesheet" href="/css/card.css" />
-    <link rel="stylesheet" href="/css/finalizarCompra.css" />
+
     <link rel="stylesheet" href="/css/carrito.css" />
+
+    <link rel="stylesheet" href="/css/finalizarCompra.css" />
     <style>
       .carousel-caption {
         top: 1.25rem;
@@ -51,7 +52,7 @@
     <header class="navbar navbar-expand-lg py-4">
       <div class="container position-relative text-nowrap gap-3">
         <div>
-          <img src="../images/logo2.jpeg" alt="Logo" width="60" height="60" />
+          <img src="../images/Logo.jpeg" alt="Logo" width="60" height="60" />
           <a class="navbar-brand"
             >Mi <span class="text-success">Cumpleaños Feliz</span></a
           >
@@ -65,30 +66,21 @@
         </div>
       </div>
     </header>
-
-    <main class="wrap">
-      <div class="compra">
-        <div class="titulo">
-          <h2>Mi carrito</h2>
-          <a href="../index.html" class="btn">Seguir comprando</a>
-          <div id="usuario"></div>
-        </div>
-        <div class="carrito">
-          <section id="carrito"></section>
-
-          <section id="total"></section>
-        </div>
-        <section class="wrap">
-          <div class="container d-flex justify-content-between">
-            <h2>PRODUCTOS RECOMENDADOS</h2>
-          </div>
-          <div id="productos" class="contenedor"></div>
-        </section>
+    <main>
+      <div class="containerFinal">
+        <h1>¡Gracias por tu compra!</h1>
+        <p>
+          Tu pedido ha sido procesado con éxito y pronto recibirás un correo
+          electrónico con los detalles de tu compra.
+        </p>
+        <p>Esperamos que disfrutes de tus productos. ¡Gracias por elegirnos!</p>
         <!-- <div id="usuario"></div>
         <div id="carrito"></div> -->
+        <a href="/index.html" class="btn" onclick="finalizarCompra()"
+          >Volver a la página principal</a
+        >
       </div>
     </main>
-
     <section id="garantias" class="py-5 wrap">
       <div class="container d-flex justify-content-between">
         <div class="d-flex align-items-center gap-3">
@@ -179,8 +171,8 @@
         </div>
       </div>
     </footer>
-    <script src="/js/config.js"></script>
-    <script src="/js/carrito.js"></script>
-    <script src="/js/index.js"></script>
   </body>
+  <script src="/js/config.js"></script>
+  <script src="/js/finalProcesoCompra.js"></script>
+  <!-- <script src="/js/index.js"></script> -->
 </html>

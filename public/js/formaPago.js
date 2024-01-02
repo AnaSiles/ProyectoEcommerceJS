@@ -1,6 +1,6 @@
 // const host = require("./config");
 
-window.addEventListener("load", finalizarCompra);
+window.addEventListener("load", finalizarCompra());
 window.addEventListener("load", pintarRegistroTarjeta);
 
 const compraid = localStorage.getItem("compraid");
@@ -79,7 +79,7 @@ function guardarTarjeta(idTarjeta, numero) {
 function pagarConTarjetaSeleccionada(compraid) {
   // Aquí recuperamos precioFinal de almacenamiento local para usarlo en datosModificados
   const precioFinal = localStorage.getItem("precioFinal");
-  const idTarjeta = localStorage.getItem("tarjetaSeleccionada");
+  const idTarjeta = localStorage.getItem("tarjeta_id");
 
   const datosModificados = {
     tarjetaid: idTarjeta,

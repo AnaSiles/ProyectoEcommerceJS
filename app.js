@@ -244,7 +244,8 @@ app.post("/direccion/:usuarioid", function (request, response) {
         response.status(400).send(`error:${error.message}`);
         return;
       }
-      response.send({ message: "direccion añadida" });
+      const direccionId = result.insertId;
+      response.send({ message: "Direccion añadida", direccionId: direccionId });
     }
   );
 });
@@ -352,7 +353,13 @@ app.post("/login", function (request, response) {
         response.status(400).send(`${error.message}`);
         return;
       }
-      response.send(result);
+      if (result.length === 0) {
+        response
+          .status(401)
+          .send("Correo electrónico o contraseña incorrectos");
+      } else {
+        response.send(result);
+      }
     }
   );
 });
@@ -374,6 +381,25 @@ app.post("/registro", function (request, response) {
     }
   );
   console.log("Insertar usuario en base de datos");
+});
+
+app.post("/pagoFinal/:compraid", function (request, response) {
+  const direccion_id = request.body.direccion_id;
+  const precio_final = request.body.precio_final;
+  const tarjeta_id = request.body.tarjeta_id;
+  const compra_finalizada = 1;
+  const compraid = request.params.compraid;
+
+  connection.query(
+    `UPDATE compras SET direccion_envio=${direccion_id}, precio_final=${precio_final},tarjetaid=${tarjeta_id}, compra_finalizada=${compra_finalizada} where id=${compraid} `,
+    (error, result, fields) => {
+      if (error) {
+        response.status(400).send(`error:${error.message}`);
+        return;
+      }
+      response.send({ message: "Compra finalizada correctamente" });
+    }
+  );
 });
 
 // Generar la llamada al puerto

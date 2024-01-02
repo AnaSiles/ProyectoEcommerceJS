@@ -28,11 +28,28 @@
     border:2px solid black;
     border-radius: 8px;
     margin-left: 32px;
+    padding-top: 32px;
+    padding-left:32px ;
+}
+.botonPagoDiv{
+    display: flex;
+    justify-content: center;
+    padding:32px;
 }
 .botonPago{
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px; /*Espacio entre los botones*/
+ 
+    background-color: #B6DCB6;
+    color:white;
+    border-radius: 8px;
+    border: none;
+    padding: 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 350px;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
 
 .resumenTotal{

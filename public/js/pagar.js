@@ -21,6 +21,21 @@ function registroDireccion() {
   const pais = document.getElementById("pais").value;
   const usuarioid = localStorage.getItem("usuarioid");
 
+  const direccionEnvio = {
+    nombre: nombre,
+    apellidos: apellidos,
+    telefono: telefono,
+    email: email,
+    calle: calle,
+    numero: numero,
+    resto_direccion: resto_direccion,
+    poblacion: poblacion,
+    cp: cp,
+    provincia: provincia,
+    pais: pais,
+  };
+  localStorage.setItem("direccionEnvio", JSON.stringify(direccionEnvio));
+
   const camposRegistro = [
     nombre,
     apellidos,
@@ -70,6 +85,8 @@ function registroDireccion() {
     .then(function (json) {
       alert("Dirección registrada correctamente");
       console.log(json);
+
+      localStorage.setItem("direccionId", json.direccionId);
     })
     .catch(function (error) {
       console.log(error.message);
@@ -206,10 +223,53 @@ function resumenPedido() {
         </h2>
         <h2> ${precioFinal}<i class="bi bi-currency-euro"></i></h2>
         </div>
-        <div class="botonPago">
-        <a href="../html/finalizarCompra.html" class="btn"
-        >Pagar con tarjeta online</a
-      >
+        <div class="botonPagoDiv">
+       <button class="botonPago" id="completarCompra">Pagar con tarjeta online</button>
     </div>`;
   containerPedido.innerHTML = resumen;
+
+  document
+    .getElementById("completarCompra")
+    .addEventListener("click", completarCompra);
+}
+
+function completarCompra() {
+  // Recuperamos los datos necesarios de los campos de entrada en la web
+  const direccionId = localStorage.getItem("direccionId");
+  const precioFinal = localStorage.getItem("precioFinal");
+  const tarjetaid = localStorage.getItem("tarjeta_id");
+  const compra_finalizada = 1;
+  const compraid = localStorage.getItem("compraid");
+
+  //Creamos el objeto que vamos a enviar al servidor
+  const datos = {
+    direccion_id: direccionId,
+    precio_final: precioFinal,
+    tarjeta_id: tarjetaid,
+    compra_finalizada: compra_finalizada,
+  };
+
+  console.log(datos);
+  // Hacemos la solicitud fetch al servidor
+  fetch(`${host}/pagoFinal/${compraid}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(datos),
+  })
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(function (json) {
+      alert("Compra finalizada correctamente");
+      console.log(json);
+      window.location.href = "finalProcesoCompra.html";
+    })
+    .catch(function (error) {
+      console.log(error.message);
+    });
 }

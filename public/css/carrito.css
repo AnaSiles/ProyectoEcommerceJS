@@ -1,12 +1,12 @@
 .compra{
-    background-image: url("/images/backgroundRober.jpg");
+    /* background-image: url("/images/backgroundRober.jpg"); */
     background-size: cover;
     padding-top: 24px 24px;
      
 }
 .titulo{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     overflow: hidden;
     padding-top: 16px;
 }
@@ -14,12 +14,14 @@
     display: flex;
     justify-content: space-around;
     overflow: hidden;
+    margin-top: 32px;
+    margin-bottom: 32px;
 }
 #carrito{
     display: flex;
     flex-direction: column;
-    margin: 40px;
-    background-color: #d2e9e198;
+    /* margin: 40px; */
+    /* background-color: #d2e9e198; */
     border-radius: 16px;
 }
 .producto {
@@ -27,7 +29,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: white;
-    margin: 24px;
+    margin-bottom: 24px;
     border-radius: 16px;
   
   }
@@ -35,7 +37,7 @@
 #total{
     display: flex;
     flex-direction: column;
-    margin: 40px;
+    margin-left: 32px;
     background-color: #d2e9e198;
     border-radius: 16px;
     justify-content: center;
@@ -45,7 +47,7 @@
   .resumen-pedido{
     padding: 20px;
     border-radius: 16px;
-    margin-top: 20px;
+    margin-left: 32px;
 }
   .producto img {
     width: 100px;
