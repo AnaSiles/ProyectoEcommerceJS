@@ -7,7 +7,7 @@ const compraid = localStorage.getItem("compraid");
 
 function finalizarCompra() {
   console.log("finalizarCompra se ha llamado");
-  let usuarioid = localStorage.getItem("usuarioid"); //Aquí recuperamos el ID del usuario
+  let usuarioid = localStorage.getItem("usuariosid"); //Aquí recuperamos el ID del usuario
   fetch(`${host}/finalizarCompra/${usuarioid}`) //Hacemos la petición con el ID del usuario
     .then(function (response) {
       console.log("Respuesta del servidor recibida: ", response);
@@ -111,7 +111,7 @@ function registroTarjeta() {
   const tipo_tarjeta = document.getElementById("tipo_tarjeta").value;
   const caducidad = document.getElementById("caducidad").value;
   const codigo_seguridad = document.getElementById("codigo_seguridad").value;
-  const usuarioid = localStorage.getItem("usuarioid");
+  const usuarioid = localStorage.getItem("usuariosid");
 
   const camposRegistro = [
     numero_tarjeta,
@@ -229,7 +229,7 @@ function actualizarListadoTarjetas() {
   console.log("actualizarlistadoTarjetas se ha llamado");
   // Esta función no necesita ningún parámetro, ya que obtiene toda la información que necesita del servidor y del alamacenamiento local del navegador
   // Obtenemos el ID del usuario actual del alamacenamiento local
-  const usuarioid = localStorage.getItem("usuarioid");
+  const usuarioid = localStorage.getItem("usuariosid");
 
   // Hacemos la petición al servidor para obtener las tarjetas asociadas al usuario
   fetch(`${host}/finalizarCompra/${usuarioid}`)

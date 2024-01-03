@@ -63,7 +63,7 @@ function productos() {
               </p>
               <div class="d-flex justify-content-between gap-3">
               <button class="btn  w-100" onClick="anadirCarrito(${json[i].id})">Añadir al carrito</button>
-              <a href="#" class="btn btn-secondary">Ver</a>
+              <a href="/html/producto.html" class="btn btn-secondary">Ver</a>
               </div>
               
               </div>`;
@@ -76,7 +76,7 @@ function productos() {
 
 function anadirCarrito(productoId) {
   let compraid = localStorage.getItem("compraid");
-  let usuarioid = localStorage.getItem("usuarioid");
+  let usuarioid = localStorage.getItem("usuariosid");
   if (compraid !== null && compraid !== "" && !isNaN(compraid)) {
     compraid = parseInt(compraid);
   } else {

@@ -32,8 +32,11 @@ function login() {
     .then(function (json) {
       if (json.length > 0) {
         // console.log("Inicio de sesión ok");
-        localStorage.setItem("usuarioid", json[0].id);
-        console.log("usuarioid guardado: ", localStorage.getItem("usuarioid"));
+        localStorage.setItem("usuariosid", json[0].id);
+        console.log(
+          "usuariosid guardado: ",
+          localStorage.getItem("usuariosid")
+        );
         localStorage.setItem("nombre", json[0].nombre);
 
         verificarCompra();
@@ -52,7 +55,7 @@ function login() {
 
 function verificarCompra() {
   // Recupera el 'usuarioid' del almacenamiento locla. Este es el ID del usuario que ha iniciado sesión.
-  const usuarioid = localStorage.getItem("usuarioid");
+  const usuarioid = localStorage.getItem("usuariosid");
   console.log("usuarioid recuperado: ", localStorage.getItem("usuarioid"));
   // Si no hay un 'usuarioid'(es decir, si hay un usuario que haya iniciado sesión), muestra el carrito vacío y terminal función
   if (!usuarioid) {
@@ -81,7 +84,7 @@ function verificarCompra() {
 
 function logoutUser() {
   console.log("Ejecutando logoutUser");
-  localStorage.removeItem("usuarioid");
+  localStorage.removeItem("usuariosid");
   localStorage.removeItem("nombre");
 
   window.location.href = "../index.html";

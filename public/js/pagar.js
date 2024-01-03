@@ -5,6 +5,9 @@ window.addEventListener("load", () => {
   resumenPedido();
   let tarjeta = document.getElementById("numeroTarjeta");
   tarjeta.innerHTML = `${localStorage.getItem("numero_tarjeta")} seleccionada`;
+  document
+    .getElementById("completarCompra")
+    .addEventListener("click", completarCompra);
 });
 
 function registroDireccion() {
@@ -19,7 +22,7 @@ function registroDireccion() {
   const cp = document.getElementById("cp").value;
   const provincia = document.getElementById("provincia").value;
   const pais = document.getElementById("pais").value;
-  const usuarioid = localStorage.getItem("usuarioid");
+  const usuarioid = localStorage.getItem("usuariosid");
 
   const direccionEnvio = {
     nombre: nombre,
@@ -86,7 +89,8 @@ function registroDireccion() {
       alert("Dirección registrada correctamente");
       console.log(json);
 
-      localStorage.setItem("direccionId", json.direccionId);
+      localStorage.setItem("direccion_id", json.direccionId);
+      console.log(localStorage.getItem("direccion_id"));
     })
     .catch(function (error) {
       console.log(error.message);
@@ -185,9 +189,9 @@ function resumenPedido() {
   const precioFinal = localStorage.getItem("precioFinal");
   const compraid = localStorage.getItem("compraid");
   const pedido = JSON.parse(localStorage.getItem("pedido"));
-  console.log(precioFinal);
-  console.log(compraid);
-  console.log("Datos del pedido almacenados: ", pedido);
+  // console.log(precioFinal);
+  // console.log(compraid);
+  // console.log("Datos del pedido almacenados: ", pedido);
   if (!pedido) {
     console.log("No hay datos del pedido en localStorage");
     return;
@@ -227,15 +231,11 @@ function resumenPedido() {
        <button class="botonPago" id="completarCompra">Pagar con tarjeta online</button>
     </div>`;
   containerPedido.innerHTML = resumen;
-
-  document
-    .getElementById("completarCompra")
-    .addEventListener("click", completarCompra);
 }
 
 function completarCompra() {
   // Recuperamos los datos necesarios de los campos de entrada en la web
-  const direccionId = localStorage.getItem("direccionId");
+  const direccionId = localStorage.getItem("direccion_id");
   const precioFinal = localStorage.getItem("precioFinal");
   const tarjetaid = localStorage.getItem("tarjeta_id");
   const compra_finalizada = 1;

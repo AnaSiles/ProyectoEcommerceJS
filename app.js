@@ -391,7 +391,7 @@ app.post("/pagoFinal/:compraid", function (request, response) {
   const compraid = request.params.compraid;
 
   connection.query(
-    `UPDATE compras SET direccion_envio=${direccion_id}, precio_final=${precio_final},tarjetaid=${tarjeta_id}, compra_finalizada=${compra_finalizada} where id=${compraid} `,
+    `UPDATE compras SET direccion_id=${direccion_id}, precio_final=${precio_final},tarjetaid=${tarjeta_id}, compra_finalizada=${compra_finalizada} where id=${compraid} `,
     (error, result, fields) => {
       if (error) {
         response.status(400).send(`error:${error.message}`);
@@ -402,6 +402,9 @@ app.post("/pagoFinal/:compraid", function (request, response) {
   );
 });
 
+app.get("/detalleProducto/:id", function (request, respose) {
+  connection.query();
+});
 // Generar la llamada al puerto
 app.listen(8000, () => {
   console.log("API up and running!");

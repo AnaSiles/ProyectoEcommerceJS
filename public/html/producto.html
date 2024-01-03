@@ -99,61 +99,33 @@
       </div>
     </nav>
 
-    <main class="wrap">
-      <div class="containerRegistro">
-        <div class="inicio">
-          <h3>Iniciar sesión</h3>
-          <p>Accede con tus datos</p>
-          <div class="datosInicio">
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Tu correo"
-              class="inputInicio"
-            />
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Tu contraseña"
-              class="inputInicio"
-            />
+    <main>
+      <div id="producto">
+        <div id="detalles">
+          <img src="ruta/a/la/imagen.jpg" alt="Imagen del producto" />
+          <h2 id="nombre">Nombre del producto</h2>
+          <p id="descripcion">Descripción del producto</p>
+          <p id="precio">Precio del producto</p>
+          <div id="cantidad">
+            <button id="disminuir">-</button>
+            <span id="cantidadActual">1</span>
+            <button id="aumentar">+</button>
           </div>
-          <button class="btn" onclick="login()">Iniciar sesión</button>
+          <button id="añadirCarrito">Añadir al carrito</button>
         </div>
-        <div class="registro">
-          <h3>Regístrate</h3>
-          <p>
-            Crea una cuenta en Mi Feliz Cumpleaños para conseguir tu primer
-            descuento como cliente
-          </p>
-
-          <div class="datosRegistro">
-            <div class="nueva">
-              <input type="text" id="nombre" placeholder="Tu nombre" />
-            </div>
-
-            <div class="nueva">
-              <input type="text" id="apellidos" placeholder="Tus apellidos" />
-            </div>
-
-            <div class="nueva">
-              <input type="text" id="emailRegistro" placeholder=" Tu correo" />
-            </div>
-
-            <div class="nueva">
-              <input
-                type="text"
-                id="contrasenaRegistro"
-                placeholder=" Tu contraseña"
-              />
-            </div>
-
-            <div class="pagarTarjetas">
-              <button class="btn" onClick="registroCliente()">
-                Crear cuenta ahora
-              </button>
+        <div id="caracteristicas">
+          <h3>Características</h3>
+          <p id="caracteristicasTexto">Características del producto</p>
+          <h3>Especificaciones</h3>
+          <p id="especificacionesTexto">Especificaciones del producto</p>
+        </div>
+        <div id="opiniones">
+          <h3>Opiniones destacadas</h3>
+          <button id="verTodas">Ver todas las opiniones</button>
+          <div id="opinion">
+            <p id="textoOpinion">Texto de la opinión</p>
+            <div id="valoracion">
+              <!-- Aquí irían las estrellas de la valoración -->
             </div>
           </div>
         </div>
@@ -224,7 +196,4 @@
       </div>
     </footer>
   </body>
-  <script src="/js/config.js"></script>
-
-  <script src="/js/login.js"></script>
 </html>

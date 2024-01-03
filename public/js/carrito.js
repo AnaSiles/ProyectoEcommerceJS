@@ -3,8 +3,10 @@ window.addEventListener("load", carrito);
 function actualizarGlobo() {
   const pedido = JSON.parse(localStorage.getItem("pedido"));
   let totalProductos = 0;
-  for (let i = 0; i < pedido.length; i++) {
-    totalProductos += pedido[i].cantidad;
+  if (pedido) {
+    for (let i = 0; i < pedido.length; i++) {
+      totalProductos += pedido[i].cantidad;
+    }
   }
 
   const spanCarrito = document.getElementById("globoCarrito");
@@ -112,6 +114,7 @@ function carrito() {
             >
           </div>
         </div>
+        
       
       `;
         }
