@@ -1,13 +1,18 @@
 // const host = require("./config");
 
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", function () {
   pintarRegistroDireccion();
   resumenPedido();
   let tarjeta = document.getElementById("numeroTarjeta");
-  tarjeta.innerHTML = `${localStorage.getItem("numero_tarjeta")} seleccionada`;
-  document
-    .getElementById("completarCompra")
-    .addEventListener("click", completarCompra);
+  if (tarjeta) {
+    tarjeta.innerHTML = `${localStorage.getItem(
+      "numero_tarjeta"
+    )} seleccionada`;
+  }
+  let completarCompraBtn = document.getElementById("completarCompra");
+  if (completarCompraBtn) {
+    completarCompraBtn.addEventListener("click", completarCompra);
+  }
 });
 
 function registroDireccion() {
@@ -55,8 +60,8 @@ function registroDireccion() {
   ];
   console.log(camposRegistro);
 
-  for (let i = 0; i < camposRegistro; i++) {
-    if (camposRegistro[i] == "") {
+  for (let i = 0; i < camposRegistro.length; i++) {
+    if (camposRegistro[i].value === "") {
       alert("Por favor, rellena todos los campos del formulario");
       return;
     }
@@ -98,8 +103,13 @@ function registroDireccion() {
 }
 
 function pintarRegistroDireccion() {
-  const containnerDiv = document.getElementById("registroDireccion");
-  const registroHTML = `
+  const containerDivs = document.getElementsByClassName("nuevaDireccion");
+
+  if (containerDivs.length > 0) {
+    for (let i = 0; i < containerDivs.length; i++) {
+      const containerDiv = containerDivs[i];
+
+      const registroHTML = `
     <div class="nueva">
       <input
           type="text"
@@ -182,55 +192,68 @@ function pintarRegistroDireccion() {
       <button onClick="registroDireccion()">Añadir Dirección</button>
       </div>
     `;
-  containnerDiv.innerHTML = registroHTML;
+      containerDiv.innerHTML = registroHTML;
+    }
+    const pagarTarjetasDiv =
+      document.getElementsByClassName("pagarTarjetas")[0];
+    const botonAñadirDireccion = document.createElement("button");
+    botonAñadirDireccion.textContent = "Añadir Dirección";
+    botonAñadirDireccion.addEventListener("click", registroDireccion);
+
+    pagarTarjetasDiv.appendChild(botonAñadirDireccion);
+  } else {
+    console.log('No se encontró ningún elemento con la clase "nueva"');
+  }
 }
 
 function resumenPedido() {
   const precioFinal = localStorage.getItem("precioFinal");
   const compraid = localStorage.getItem("compraid");
   const pedido = JSON.parse(localStorage.getItem("pedido"));
-  // console.log(precioFinal);
-  // console.log(compraid);
-  // console.log("Datos del pedido almacenados: ", pedido);
+
   if (!pedido) {
     console.log("No hay datos del pedido en localStorage");
     return;
   }
-  console.log("Datos del pedido recuperados: ", pedido);
-  const containerPedido = document.getElementById("resumenPedido");
-  let resumen = "";
 
-  for (let i = 0; i < pedido.length; i++) {
-    resumen += `
-          <div class="resumen-pedido">
-          
+  const containerPedido = document.querySelector(".resumenPedido");
+
+  if (containerPedido) {
+    let resumen = "";
+
+    for (let i = 0; i < pedido.length; i++) {
+      resumen += `
+        <div class="resumen-pedido">
           <div class="descripcion">
-          <div class="nombre">
-          <h4>${pedido[i].nombre}</h4>
+            <div class="nombre">
+              <h4>${pedido[i].nombre}</h4>
+            </div>
+            <div class="precio">
+              <h4>${pedido[i].precio}<i class="bi bi-currency-euro"></i></h4>
+            </div>
+            <div class="cantidad">
+              <button class="btn" id="btn-menos" onClick="disminuirCantidad(${i}, ${compraid}, ${pedido[i].productoid})">-</button>
+              <h4 id="cantidad${pedido[i].productoid}">${pedido[i].cantidad}</h4>
+              <button class="btn" id="btn-mas" onClick="aumentarCantidad(${i},${compraid}, ${pedido[i].productoid})">+</button>
+            </div>
+            <button class="btn btn-eliminar" onClick="eliminarProducto(${i},${compraid}, ${pedido[i].productoid})">Eliminar</button>
           </div>
-          <div class="precio">
-          <h4>${pedido[i].precio}<i class="bi bi-currency-euro"></i></h4>
-          </div>
-          <div class="cantidad">
-          <button class="btn" id="btn-menos" onClick="disminuirCantidad(${i}, ${compraid}, ${pedido[i].productoid}">-</button>
-          <h4 id="cantidad${pedido[i].productoid}">${pedido[i].cantidad}</h4>
-          <button class="btn" id="btn-mas" onClick="aumentarCantidad"(${i},${compraid}, ${pedido[i].productoid}) >+</button>
-          </div>
-          <button class="btn btn-eliminar" onClick="eliminarProducto(${i},${compraid}, ${pedido[i].productoid}">Eliminar</button>
-          </div>
-          </div>`;
+        </div>`;
+    }
+
+    resumen += `
+      <div class="resumenTotal">
+        <h2>TOTAL</h2>
+        <h2>${precioFinal}<i class="bi bi-currency-euro"></i></h2>
+      </div>
+      <div class="botonPagoDiv">
+        <button class="botonPago" id="completarCompra">Pagar con tarjeta online</button>
+      </div>`;
+
+    containerPedido.innerHTML = resumen;
+  } else {
+    console.log('No se encontró el elemento con id "resumenPedido"');
   }
-  resumen += `
-  <div class="resumenTotal">
-        <h2>
-        TOTAL
-        </h2>
-        <h2> ${precioFinal}<i class="bi bi-currency-euro"></i></h2>
-        </div>
-        <div class="botonPagoDiv">
-       <button class="botonPago" id="completarCompra">Pagar con tarjeta online</button>
-    </div>`;
-  containerPedido.innerHTML = resumen;
 }
 
 function completarCompra() {

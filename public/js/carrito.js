@@ -41,9 +41,10 @@ window.mostrarCarritoConCompra = function (cantidad) {
 // localStorage.setItem("compraid", compraid);
 // console.log("compraid guardado:", localStorage.getItem("compraid"));
 
+window.addEventListener("load", carrito);
+
 function carrito() {
   const compraid = localStorage.getItem("compraid");
-  console.log("compraid guardado:", compraid);
   fetch(`${host}/carrito/${compraid}`)
     .then(function (response) {
       return response.json();
@@ -68,62 +69,66 @@ function carrito() {
         containerCarrito.innerHTML = "";
         for (let i = 0; i < json.length; i++) {
           containerCarrito.innerHTML += `
-        <div class="producto">
-    <img
-      src="${json[i].foto}"
-      alt="${json[i].nombre}"
-      width="90 %"
-    />
-    <div class="descripcion">
-     <div class="nombre">
-      <h4>${json[i].nombre}</h4>
-     </div>
-     <div class="precio">
-       <p>${json[i].precio}</p>
-       <i class="bi bi-currency-euro text-success"></i>
-     </div>
-    
-      <div class="cantidad">
-      <button class="btn" id="btn-mas" onClick="disminuirCantidad(${compraid},${json[i].productoid})">-</button>
-      <p id="cantidad${json[i].productoid}">${json[i].cantidad}</p>
-      <button class="btn" id="btn-mas" onClick="incrementarCantidad(${compraid},${json[i].productoid})">+</button>
-      <button class="btn" onClick="eliminarProducto(${compraid},${json[i].productoid})">Eliminar</button>
-    </div>
-  
-  </div>
-  </div>`;
+            <div class="producto">
+              <img src="${json[i].foto}" alt="${json[i].nombre}" width="90%" />
+              <div class="descripcion">
+                <div class="nombre">
+                  <h4>${json[i].nombre}</h4>
+                </div>
+                <div class="precio">
+                  <p>${json[i].precio}</p>
+                  <i class="bi bi-currency-euro text-success"></i>
+                </div>
+                <div class="cantidad">
+                  <button class="btn" id="btn-menos-${i}">-</button>
+                  <p id="cantidad${json[i].productoid}">${json[i].cantidad}</p>
+                  <button class="btn" id="btn-mas-${i}">+</button>
+                  <button class="btn" onClick="eliminarProducto(${json[i].productoid},${compraid})">Eliminar</button>
+                </div>
+              </div>
+            </div>`;
           if (!isNaN(json[i].precio) && !isNaN(json[i].cantidad)) {
             precioFinal += json[i].precio * json[i].cantidad;
           } else {
-            console.log("Error:precio o cantidad no son números", json[i]);
+            console.log("Error: precio o cantidad no son números", json[i]);
           }
-          containerPrecioFinal.innerHTML = `
-        <div class="resumen-pedido">
-          <h3>Resumen del pedido</h3>
-          <p>
-            Continua con el proceso de compra para conectar pagar con tu tarjeta
-          </p>
-          <div>
-            <div class="precio">
-              <h2>${precioFinal} <i class="bi bi-currency-euro" m-color></i></h2>
-            </div>
-          </div>
-          <div class="botones">
-              <a href="../html/formaPago.html" class="btn"
-              >Proceder al pago</a
-            >
-          </div>
-        </div>
-        
-      
-      `;
+
+          // Evitar innerHTML para eventos
+          const disminuirBtn = document.getElementById(`btn-menos-${i}`);
+          if (disminuirBtn) {
+            disminuirBtn.addEventListener("click", function () {
+              disminuirCantidad(compraid, json[i].productoid);
+            });
+          }
+
+          const aumentarBtn = document.getElementById(`btn-mas-${i}`);
+          if (aumentarBtn) {
+            aumentarBtn.addEventListener("click", function () {
+              incrementarCantidad(compraid, json[i].id);
+            });
+          }
+
+          // Agrega eventos para otros elementos si es necesario
         }
-        //   Es aquí donde guardamos precioFinal en el almacenamiento local
         localStorage.setItem("precioFinal", precioFinal);
         console.log(
           "precioFinal guardado: ",
           localStorage.getItem("precioFinal")
         );
+
+        containerPrecioFinal.innerHTML = `
+          <div class="resumen-pedido">
+            <h3>Resumen del pedido</h3>
+            <p>Continua con el proceso de compra para conectar pagar con tu tarjeta</p>
+            <div>
+              <div class="precio">
+                <h2>${precioFinal}<i class="bi bi-currency-euro"></i></h2>
+              </div>
+            </div>
+            <div class="botones">
+              <a href="../html/formaPago.html" class="btn">Proceder al pago</a>
+            </div>
+          </div>`;
       }
     })
     .catch(function (error) {
@@ -132,6 +137,10 @@ function carrito() {
 }
 
 function incrementarCantidad(compraid, productoid) {
+  compraid = localStorage.getItem("compraid");
+  if (!compraid) {
+    alert("Por favor, identifícate para mosidifcarla cantidad de producto");
+  }
   fetch(`${host}/incremento_cantidad/${compraid}/${productoid}`, {
     method: "POST",
   })
@@ -152,6 +161,10 @@ function incrementarCantidad(compraid, productoid) {
 }
 
 function disminuirCantidad(compraid, productoid) {
+  compraid = localStorage.getItem("compraid");
+  if (!compraid) {
+    alert("Por favor, identifícate para modificar la cantidad del producto");
+  }
   fetch(`${host}/disminuir_cantidad/${compraid}/${productoid}`, {
     method: "POST",
   })

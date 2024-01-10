@@ -28,6 +28,13 @@ function manejarIncioSesion() {
 
 // let compra_finalizada = 1;
 
+function guardarIdProducto(idProducto) {
+  // Guarda el ID del producto en localStorage
+  localStorage.setItem("productoid", idProducto);
+  console.log("ID del producto guardado:", idProducto);
+
+  window.location.href = "/html/producto.html";
+}
 function productos() {
   fetch(`${host}/productos`)
     .then(function (response) {
@@ -63,7 +70,7 @@ function productos() {
               </p>
               <div class="d-flex justify-content-between gap-3">
               <button class="btn  w-100" onClick="anadirCarrito(${json[i].id})">Añadir al carrito</button>
-              <a href="/html/producto.html" class="btn btn-secondary">Ver</a>
+              <button class="btn btn-secondary" onClick="guardarIdProducto(${json[i].id})">Ver</button>
               </div>
               
               </div>`;
@@ -73,6 +80,8 @@ function productos() {
       console.log(error);
     });
 }
+
+// Define la función guardarIdProducto
 
 function anadirCarrito(productoId) {
   let compraid = localStorage.getItem("compraid");

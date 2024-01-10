@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="/css/finalizarCompra.css" />
     <link rel="stylesheet" href="/css/carrito.css" />
     <link rel="stylesheet" href="/css/login.css" />
+    <link rel="stylesheet" href="/css/detalleProducto.css" />
 
     <style>
       .carousel-caption {
@@ -95,41 +96,13 @@
             <a class="nav-link" href="#">Ofertas</a>
           </div>
           <div class="navbar-nav" id="usuario"></div>
+          <a class="nav-link" href="login.html">Accede o regístrate</a>
         </div>
       </div>
     </nav>
 
     <main>
-      <div id="producto">
-        <div id="detalles">
-          <img src="ruta/a/la/imagen.jpg" alt="Imagen del producto" />
-          <h2 id="nombre">Nombre del producto</h2>
-          <p id="descripcion">Descripción del producto</p>
-          <p id="precio">Precio del producto</p>
-          <div id="cantidad">
-            <button id="disminuir">-</button>
-            <span id="cantidadActual">1</span>
-            <button id="aumentar">+</button>
-          </div>
-          <button id="añadirCarrito">Añadir al carrito</button>
-        </div>
-        <div id="caracteristicas">
-          <h3>Características</h3>
-          <p id="caracteristicasTexto">Características del producto</p>
-          <h3>Especificaciones</h3>
-          <p id="especificacionesTexto">Especificaciones del producto</p>
-        </div>
-        <div id="opiniones">
-          <h3>Opiniones destacadas</h3>
-          <button id="verTodas">Ver todas las opiniones</button>
-          <div id="opinion">
-            <p id="textoOpinion">Texto de la opinión</p>
-            <div id="valoracion">
-              <!-- Aquí irían las estrellas de la valoración -->
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="detalleProducto"></div>
     </main>
 
     <footer class="bg-gradient text-dark">
@@ -195,5 +168,11 @@
         </div>
       </div>
     </footer>
+
+    <script src="/js/config.js"></script>
+
+    <script src="/js/detalleProducto.js"></script>
+    <script src="/js/carrito.js"></script>
+    <script src="/js/pagar.js"></script>
   </body>
 </html>

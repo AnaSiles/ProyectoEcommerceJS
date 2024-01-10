@@ -402,9 +402,54 @@ app.post("/pagoFinal/:compraid", function (request, response) {
   );
 });
 
-app.get("/detalleProducto/:id", function (request, respose) {
-  connection.query();
+app.get("/detalleProducto/:id", function (request, response) {
+  connection.query(
+    `SELECT * FROM productos WHERE id=${request.params.id}`,
+    (error, result, fields) => {
+      if (error) {
+        response.status(400).send(`${error.message}`);
+        return;
+      }
+      response.send(result);
+      console.log("Selecciona los detalles del producto con el :id");
+    }
+  );
 });
+
+app.get("/valoraciones/:id", function (request, response) {
+  // const id = request.params.id;
+
+  connection.query(
+    `SELECT * FROM valoraciones WHERE id=${request.params.id}`,
+    (error, result, fields) => {
+      if (error) {
+        response.status(400).send(`${error.message}`);
+        return;
+      }
+      response.send(result);
+      console.log("Obtiene las valoraciones de los productos con :id");
+    }
+  );
+});
+
+app.get("/especificacionesProducto/:productoid", function (request, response) {
+  const productoid = request.params.productoid;
+
+  connection.query(
+    `SELECT * FROM productos_especificaciones inner join especificaciones on productos_especificaciones.especificacionesid=especificaciones.id WHERE productos_especificaciones.productoid=${productoid}`,
+    (error, result, fields) => {
+      if (error) {
+        response.status(400).send(`${error.message}`);
+        return;
+      }
+      response.send(result);
+      console.log(
+        "Selecciona los detalles de especificaciones con el :productoid"
+      );
+    }
+  );
+});
+
 // Generar la llamada al puerto
 app.listen(8000, () => {
   console.log("API up and running!");

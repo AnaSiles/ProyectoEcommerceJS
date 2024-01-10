@@ -1,0 +1,114 @@
+.detalleProducto{
+  max-width: 80%;
+}
+
+.detalle-producto {
+  
+  background-color: #d2e9e198;
+  display: flex;
+  justify-content: space-between;
+   margin:40px 32px;
+  border-radius:8px;
+}
+
+.imagen-producto img {
+  border: 8px solid #b6dcb6;
+  border-radius: 8px;
+  width: 320px;
+  height: 320px;
+  object-fit:cover;
+  margin: 32px;
+}
+
+.descripcion-producto {
+  display: block;
+  margin: 32px;
+  /* width: 100%; */
+}
+.detalle-precio{
+  display: flex;
+
+}
+.detalle-catidad{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
+
+.descripcion-producto .nombre h4, .precio p {
+  clear: both;
+}
+
+
+
+.descripcion-producto .cantidad button, .cantidad p {
+  margin: 0 10px;
+}
+
+.descripcion-producto .btn {
+  display: block;
+  margin-top: 20px;
+}
+.detalle-caracteristicas{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  margin: 40px;
+}
+
+.caracteristicas, .especificaciones {
+  width: 50%;
+  margin: 40px;
+
+}
+
+.opiniones {
+  
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin:40px;
+}
+
+/* .detalle-opiniones{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 20px;
+} */
+
+
+
+
+
+/* .opiniones button { */
+  /* Añade aquí los estilos para el botón de las opiniones */
+  /*background-color: #B6DCB6; /* Color de fondo */
+  /*text-decoration:none; /*Eliminar la decoración del texto*/
+  /* border: none; */
+  /*color: white; /* Color del texto */
+  /* padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 6px 4px;
+  cursor: pointer;
+  border-radius: 8px;
+
+} */
+
+/* .opiniones #opinion { */
+  /* Añade aquí los estilos para el contenedor de las opiniones */
+  /* border: 8px solid #b6dcb6;
+  border-radius: 8px;
+  padding: 40px;
+} */
+
+.estrella {
+  color: gold;
+}
+
+  
