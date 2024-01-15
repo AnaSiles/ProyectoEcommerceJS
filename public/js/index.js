@@ -42,7 +42,7 @@ function productos() {
     })
     .then(function (json) {
       const containerproductos = document.getElementById("productos");
-
+      containerproductos.innerHTML = "";
       for (let i = 0; i < json.length; i++) {
         containerproductos.innerHTML += `
             

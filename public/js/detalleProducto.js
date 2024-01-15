@@ -16,13 +16,10 @@ function detalleProducto() {
     .then(function (json) {
       console.log("Datos del producto:", json);
 
-      // Cambiar getElementByClassName por getElementsByClassName
       const containersProducto =
         document.getElementsByClassName("detalleProducto");
 
-      // Verificar si hay elementos con la clase "detalleProducto"
       if (containersProducto.length > 0) {
-        // Iterar sobre los elementos encontrados
         for (let i = 0; i < containersProducto.length; i++) {
           const containerProducto = containersProducto[i];
 
@@ -30,44 +27,40 @@ function detalleProducto() {
 
           containerProducto.innerHTML = `
             <div class="detalle-producto">
-            <div class="imagen-producto">
+              <div class="imagen-producto">
                 <img src="${json[0].foto}" alt="${json[0].nombre}"/>
+              </div>
+              <div class="descripcion-producto">
+                <h2 id="nombre">${json[0].nombre}</h2>
+                <p id="descripcion">${json[0].descripcion_corta}</p>
+                <div class="detalle-precio">
+                  <p id="precio">${json[0].precio}</p>
+                  <i class="bi bi-currency-euro text-success"></i>
+                </div>
+                <button id="añadirCarrito" class="btn">Añadir al carrito</button>
+              </div>
             </div>
-            <div class="descripcion-producto">
-               <h2 id="nombre">${json[0].nombre}</h2>
-               <p id="descripcion">${json[0].descripcion_corta}</p>
-               <div class="detalle-precio">
-                 <P id="precio">${json[0].precio}</P>
-                 <i class="bi bi-currency-euro text-success"></i>
-               </div>
-
-              
-                   <button id="añadirCarrito" class="btn">Añadir al carrito</button>
-                
-               
+            <div class="detalle-caracteristicas">
+              <div class="caracteristicas">
+                <h3>Características</h3>
+                <p id="caracteristicasTexto">${json[0].caracteristicas}</p>
+              </div>
+              <div class="especificaciones" id="especificaciones">
+                <h3>Especificaciones</h3>
+                <!-- Aquí se insertarán las especificaciones -->
+              </div>
             </div>
-     </div>
-     <div class="detalle-caracteristicas">
-          <div class="caracteristicas">
-              <h3>Características</h3>
-              <P id="caracteristicasTexto">${json[0].caracteristicas}</P>
-          </div>
-          <div class="especificaciones" id="especificaciones">
-              <h3>Especificaciones</h3>
-              <!-- Aquí se insertarán las especificaciones -->
-          </div>
-     </div>  
-            
-    <div class="opiniones">
-            <div class="detalle-opiniones">
-              <h3>Opiniones destacadas</h3>
-              <button id="verTodas">Ver todas las opiniones</button>
+            <div class="opiniones">
+              <div class="detalle-opiniones">
+                <h3>Opiniones destacadas</h3>
+                <button id="verTodas" class="btn">Ver todas las opiniones</button>
+              </div>
+              <div id="opinion" class="opinion">
+                <!-- Aquí se insertarán las opiniones -->
+              </div>
             </div>
-            <div id="opinion">
-              <!-- Aquí se insertarán las opiniones -->
-            </div>
-    </div>
-            `;
+            <div id="opinionesContainer"></div>
+          `;
 
           const añadirCarritoBtn =
             containerProducto.querySelector("#añadirCarrito");
@@ -75,10 +68,8 @@ function detalleProducto() {
             añadirCarritoBtn.addEventListener("click", function () {
               const usuarioIdentificado = localStorage.getItem("nombre");
               if (usuarioIdentificado) {
-                // Lógica para añadir al carrito
                 anadirCarrito(json[0].id);
               } else {
-                // Mostrar un alerta si el usuario no está identificado
                 alert("Para añadir al carrito, tienes que identificarte.");
               }
             });
@@ -98,7 +89,7 @@ function detalleProducto() {
       return response.json();
     })
     .then(function (valoraciones) {
-      const containerOpinion = document.getElementById("opinion");
+      const containerOpinion = document.getElementById("opinionesContainer");
       if (containerOpinion) {
         valoraciones.forEach(function (valoracion) {
           let estrellas = "";
@@ -111,11 +102,43 @@ function detalleProducto() {
               ${estrellas}
             </div>`;
         });
+
+        cargarOpiniones();
       }
     })
     .catch(function (error) {
       console.log(error);
     });
+}
+
+function cargarOpiniones() {
+  const opinionesContainer = document.getElementById("opinionesContainer");
+
+  const opiniones = [
+    "Excelente servicio, las tartas son deliciosas.",
+    "Siempre compro aquí para mis celebraciones, nunca me decepciona.",
+    "Buena atención al cliente y entregas rápidas.",
+  ];
+
+  opinionesContainer.innerHTML = "";
+  for (let i = 0; i < opiniones.length; i++) {
+    const opinionDiv = document.createElement("div");
+    opinionDiv.classList.add("opinion");
+    opinionDiv.textContent = opiniones[i];
+    opinionesContainer.appendChild(opinionDiv);
+
+    setInterval(() => cambiarOpiniones(opiniones), 5000);
+  }
+}
+
+function cambiarOpiniones(opiniones) {
+  const opinionesContainer = document.getElementById("opinionesContainer");
+  const opinionActual = opinionesContainer.querySelector(".opinion");
+
+  const indexOpinionActual = opiniones.indexOf(opinionActual.textContent);
+  const siguienteIndex = (indexOpinionActual + 1) % opiniones.length;
+
+  opinionActual.textContent = opiniones[siguienteIndex];
 }
 
 function cargarEspecificaciones(productoid) {

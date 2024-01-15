@@ -8,12 +8,18 @@
     --celeste-claro: #B2FFFF;
     --celeste-oscuro: #87CEFA;
   }
-  
+    
 
 body {
-    font-family:cursive;
-    background-image: url('/images/backgroundRober.jpg') ;
+  font-family: 'Patrick Hand SC', cursive; 
+  background-image: url('/images/PintadoBackground.jpg') ;
+  font-size: 24px;
+  font-weight: 800;
     
+  }
+  body h1{
+    font-size: 56px;
+    font-weight: 1000;
   }
 
 footer {
@@ -25,7 +31,7 @@ footer {
 
 
 .tituloWeb{
-  color:rgb(55, 241, 111);
+  color:#B6DCB6;
 }
   
   .btn {
@@ -121,6 +127,13 @@ footer {
     margin: 40px;
     background-color: #d2e9e198;
     border-radius: 16px;
+    padding:32px;
+  }
+  
+  .indice{
+    display: flex;
+    flex-direction: column;
+    margin: 40px;
     padding:32px;
   }
   
